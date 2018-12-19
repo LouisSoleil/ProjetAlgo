@@ -245,7 +245,6 @@ struct TPiece : Piece{
             throw Erreur.mauvaisparametre
         }
         self.pos = nouvellePos
-        }
         return partie
     }
     
@@ -280,18 +279,18 @@ struct TKodama : TPiece {
         if self.pos != nil && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.pieceAPosition(pos : position) == nil{
             if self.estTransforme(){
                 if self.proprietairePiece() == 1 {
-                    if (self.pos[0]+1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1]-1 == position[1]) || self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
+                    if (self.pos[0]+1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
                         return true
                     }
                     else {
                         return false
                     }
                 }
-                else {
+                else{
                     if (self.pos[0]-1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1]-1 == position[1]) || self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
                         return true
                     }
-                    else {
+                    else{
                         return false
                     }
                 }
@@ -370,6 +369,7 @@ struct TKodama : TPiece {
     }
 
 }
+
 
 
 
