@@ -63,14 +63,14 @@ struct TPartie {
     //private var pieces : [TPiece] =
     
     init(){
-        self.ko1 = TPiece(position : [1,1], nom : Kodoma, partie : Self)
-        self.ko2 = TPiece(position : [2,1], nom : Kodoma, partie : Self)
-        self.ki1 = TPiece(position : [0,2], nom : Kitsune, partie : Self)
-        self.ki2 = TPiece(position : [3,0], nom : Kitsune, partie : Self)
-        self.ta1 = TPiece(position : [0,0], nom : Tanuki, partie : Self)
-        self.ta2 = TPiece(position : [3,3], nom : Tanuki, partie : Self)
-        self.ku1 = TPiece(position : [0,1], nom : Kuropokkuru, partie : Self)
-        self.ku2 = TPiece(position : [3,1], nom : Kuropokkuru, partie : Self)
+        self.ko1 = TPiece(position : [1,1], nom : "Kodoma", partie : Self)
+        self.ko2 = TPiece(position : [2,1], nom : "Kodoma", partie : Self)
+        self.ki1 = TPiece(position : [0,2], nom : "Kitsune", partie : Self)
+        self.ki2 = TPiece(position : [3,0], nom : "Kitsune", partie : Self)
+        self.ta1 = TPiece(position : [0,0], nom : "Tanuki", partie : Self)
+        self.ta2 = TPiece(position : [3,3], nom : "Tanuki", partie : Self)
+        self.ku1 = TPiece(position : [0,1], nom : "Kuropokkuru", partie : Self)
+        self.ku2 = TPiece(position : [3,1], nom : "Kuropokkuru", partie : Self)
     }
     
     func PartieFini() -> Bool {
@@ -122,7 +122,7 @@ struct TPartie {
         }
     }
     
-    func joueurActif(){
+    func joueurActif() -> Int{
         if self.joueurActif == 1 {
             return 1
         }
