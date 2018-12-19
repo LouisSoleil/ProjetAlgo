@@ -50,23 +50,27 @@ protocol Partie : Sequence {
 // structure de la partie : 
 
 
-struct Partie {
-    private var piece : Piece
-    private var position : [Int]
-    private var joueur : Int
+struct TPartie {
+    internal var ko1 : TPiece
+    internal var ko2 : TPiece
+    internal var ki1 : TPiece
+    internal var ki2 : TPiece
+    internal var ta1 : TPiece
+    internal var ta2 : TPiece
+    internal var ku1 : TPiece
+    internal var ku2 : TPiece
+    internal var joueurActif = Int(arc4random_uniform(UInt32(2)))+1
     //private var pieces : [TPiece] =
     
     init(){
-        var j1 : joueur = 1
-        var j2 : joueur = 2
-        var ko1 : piece = TPiece(position : [1,1], nom : Kodoma, partie : Self)
-        var ko2 : piece = TPiece(position : [2,1], nom : Kodoma, partie : Self)
-        var ki1 : piece = TPiece(position : [0,2], nom : Kitsune, partie : Self)
-        var ki2 : piece = TPiece(position : [3,0], nom : Kitsune, partie : Self)
-        var ta1 : piece = TPiece(position : [0,0], nom : Tanuki, partie : Self)
-        var ta2 : piece = TPiece(position : [3,3], nom : Tanuki, partie : Self)
-        var ku1 : piece = TPiece(position : [0,1], nom : Kuropokkuru, partie : Self)
-        var ku2 : piece = TPiece(position : [3,1], nom : Kuropokkuru, partie : Self)
+        self.ko1 = TPiece(position : [1,1], nom : Kodoma, partie : Self)
+        self.ko2 = TPiece(position : [2,1], nom : Kodoma, partie : Self)
+        self.ki1 = TPiece(position : [0,2], nom : Kitsune, partie : Self)
+        self.ki2 = TPiece(position : [3,0], nom : Kitsune, partie : Self)
+        self.ta1 = TPiece(position : [0,0], nom : Tanuki, partie : Self)
+        self.ta2 = TPiece(position : [3,3], nom : Tanuki, partie : Self)
+        self.ku1 = TPiece(position : [0,1], nom : Kuropokkuru, partie : Self)
+        self.ku2 = TPiece(position : [3,1], nom : Kuropokkuru, partie : Self)
     }
     
     func PartieFini() -> Bool {
@@ -74,32 +78,69 @@ struct Partie {
         if ku1.proprietairePiece() == 2 || ku2.proprietairePiece() == 1 {
             return !fin
         }
-        else if (self.joueurActif()==2 && ku1.positionPiece()[0] == 3){
-            if changerTour() && (ku1.positionPiece()[0]) == 3{
-                return !fin
-            }
+        else if ko1.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
         }
-        else if (self.joueurActif()==1 && ku2.positionPiece()[0] == 0){
-            if changerTour() && (ku2.positionPiece()[0]) == 0{
-                return !fin
-            }
+        else if ko2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
+        }
+        else if ki1.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
+        }
+        else if ki2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
+        }
+        else if ta1.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
+        }
+        else if ta2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
+        }
+        else if ku2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+            return !fin
+        }
+        else if ko1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
+        }
+        else if ko2.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
+        }
+        else if ki1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
+        }
+        else if ki2.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
+        }
+        else if ta1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
+        }
+        else if ta2.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
+        }
+        else if ku1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+            return !fin
         }
     }
     
-    mutating func joueurActif(){
-        
+    func joueurActif(){
+        if self.joueurActif == 1 {
+            return 1
+        }
+        else {
+            return 2
+        }
     }
     
     mutating func changerTour() {
         if self.joueurActif()==1{
-            return 2
+            self.joueurActif = 2
         }
         else {
-            return 1
+            self.joueurActif = 1
         }
     }
 
-    func pieceAPosition(pos : [Int]) -> Piece?{
+    func pieceAPosition(pos : [Int]) -> TPiece?{
         if ko1.positionPiece() == pos {
             return ko1
         }
@@ -143,12 +184,12 @@ struct Partie {
     }
     
     mutating func gagner(joueur :Int){
-        if ku1 == 2 {
+        if joueur == 2 {
             print("le joueur 2 a gagné")
             self.PartieFini()
         }
-        if ku2 == 1 {
-            print("le joueur 2 a gagné")
+        else{
+            print("le joueur 1 a gagné")
             self.PartieFini()
         }
     }
@@ -158,7 +199,7 @@ struct Partie {
     }
     
     func pieceJIT(joueur : Int)-> PieceJIT{
-        return pieceJIT(joueur, partie : self)
+        return pieceJIT(joueur : Int, partie : self)
         }
         
 }
