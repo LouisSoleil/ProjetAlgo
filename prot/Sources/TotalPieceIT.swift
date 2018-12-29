@@ -1,13 +1,15 @@
 
 protocol TotalPieceIT : IteratorProtocol{
     
-    associatedtype Piece
+    associatedtype TPiece
+    associatedtype TPartie
+
 
     //crée un iterateur avec toutes les pieces de la partie
-    init()
+    init(partie : TPartie)
     
     //Iterator Next : parcourt toutes les pieces de la partie : renvoit la piece courante et passe a la piece suivante
-    mutating func next()->Piece?
+    mutating func next()->TPiece?
 }
 
 struct ItTotalPieceIT : TotalPieceIT {
@@ -20,7 +22,7 @@ struct ItTotalPieceIT : TotalPieceIT {
         self.courant = partie.ko1
     }
     
-    mutating func next(){
+    mutating func next()->TPiece?{
         if !self.courant == nil{
             var t = true
             var i = 0
@@ -38,6 +40,7 @@ struct ItTotalPieceIT : TotalPieceIT {
                 }
             }
         }
+        return self.courant
     }
     
 }

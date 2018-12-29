@@ -2,7 +2,7 @@ protocol Partie : Sequence {
     
     associatedtype TotalPieceIT : IteratorProtocol
     associatedtype PieceJIT : IteratorProtocol
-    associatedtype Piece
+    associatedtype TPiece
     
     // Crée une partie :
     // post : La partie contient
@@ -16,7 +16,7 @@ protocol Partie : Sequence {
     
     // Indique quel est le joueur actif actuel
     // post : retourne soit 1, soit 2 en fonction que le joueur soit le joueur 1 ou 2
-    func joueurActif()->Int
+    func joueurActif() -> Int
     
     //Change le joueur actif : si c'etait le joueur 1, ça devient le joueur 2, et inversement
     mutating func changerTour()
@@ -24,7 +24,7 @@ protocol Partie : Sequence {
     // Renvoie la piece a cette position s'il y en a une, Vide sinon
     // pre : Il s'agit d'une position : pos[0] est la ligne, entre 0 et 3, pos[1] est la colonne, entre 0 et 2, il n'y a que 2 arguments (ligne et colonne)
     // post : La piece est la piece a la position entrée
-    func pieceAPosition(pos : [Int]) -> Piece?
+    func pieceAPosition(pos : [Int]) -> TPiece?
     
     // Indique s'il y a une piece a cette position
     // pre : Il s'agit d'une position : pos[0] est la ligne, entre 0 et 3, pos[1] est la colonne, entre 0 et 2, il n'y a que 2 arguments (ligne et colonne)
@@ -59,18 +59,19 @@ struct TPartie {
     internal var ta2 : TPiece
     internal var ku1 : TPiece
     internal var ku2 : TPiece
-    internal var joueurActif = Int(arc4random_uniform(UInt32(2)))+1
+    internal var joueurA : Int
     //private var pieces : [TPiece] =
     
     init(){
-        self.ko1 = TPiece(position : [1,1], nom : "Kodoma", partie : Self)
-        self.ko2 = TPiece(position : [2,1], nom : "Kodoma", partie : Self)
-        self.ki1 = TPiece(position : [0,2], nom : "Kitsune", partie : Self)
-        self.ki2 = TPiece(position : [3,0], nom : "Kitsune", partie : Self)
-        self.ta1 = TPiece(position : [0,0], nom : "Tanuki", partie : Self)
-        self.ta2 = TPiece(position : [3,3], nom : "Tanuki", partie : Self)
-        self.ku1 = TPiece(position : [0,1], nom : "Kuropokkuru", partie : Self)
-        self.ku2 = TPiece(position : [3,1], nom : "Kuropokkuru", partie : Self)
+        self.ko1 = TPiece(position : [1,1], nom : "Kodoma", partie : self)
+        self.ko2 = TPiece(position : [2,1], nom : "Kodoma", partie : self)
+        self.ki1 = TPiece(position : [0,2], nom : "Kitsune", partie : self)
+        self.ki2 = TPiece(position : [3,0], nom : "Kitsune", partie : self)
+        self.ta1 = TPiece(position : [0,0], nom : "Tanuki", partie : self)
+        self.ta2 = TPiece(position : [3,3], nom : "Tanuki", partie : self)
+        self.ku1 = TPiece(position : [0,1], nom : "Kuropokkuru", partie : self)
+        self.ku2 = TPiece(position : [3,1], nom : "Kuropokkuru", partie : self)
+        self.joueurA = Int(arc4random_uniform(UInt32(2)))+1
     }
     
     func PartieFini() -> Bool {
@@ -123,7 +124,7 @@ struct TPartie {
     }
     
     func joueurActif() -> Int{
-        if self.joueurActif == 1 {
+        if self.joueurA == 1 {
             return 1
         }
         else {
@@ -133,10 +134,10 @@ struct TPartie {
     
     mutating func changerTour() {
         if self.joueurActif()==1{
-            self.joueurActif = 2
+            self.joueurA = 2
         }
         else {
-            self.joueurActif = 1
+            self.joueurA = 1
         }
     }
 

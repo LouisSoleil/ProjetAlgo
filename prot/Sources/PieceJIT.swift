@@ -1,14 +1,15 @@
 
 protocol PieceJIT : IteratorProtocol{
     
-    associatedtype Piece
+    associatedtype TPiece
+    associatedtype TPartie
     
     // Crée l'iterateur avec les pieces du joueur en entrée
     //    pre : joueur == 1 ou joueur == 2 
     init(joueur : Int, partie : TPartie)
     
     // Iterator Next : parcourt les pieces du joueur en entrée : renvoit la piece courante et passe a la piece suivante
-    mutating func next()->Piece?
+    mutating func next()->TPiece?
 }
 
 struct TPieceJIT : PieceJIT {
@@ -27,7 +28,7 @@ struct TPieceJIT : PieceJIT {
         }
     }
     
-    mutating func next (){
+    mutating func next()->TPiece?{
         if !self.courant == nil{
             var t = true
             var i = 0
@@ -45,5 +46,6 @@ struct TPieceJIT : PieceJIT {
                 }
             }
         }
+        return self.courant
     }
 }
