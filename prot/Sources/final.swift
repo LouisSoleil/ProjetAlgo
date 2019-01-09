@@ -1,4 +1,9 @@
 //fichier avec toutes les class et le main
+
+import Foundation
+//import prot
+
+
 struct TPartie {
     internal var ko1 : TPiece
     internal var ko2 : TPiece
@@ -28,46 +33,46 @@ struct TPartie {
         if ku1.proprietairePiece() == 2 || ku2.proprietairePiece() == 1 {
             return !fin
         }
-        else if ko1.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ko1.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ko2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ko2.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ki1.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ki1.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ki2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ki2.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ta1.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ta1.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ta2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ta2.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ku2.estPossibleMouvement(partie : self, position : ku1.positionPiece()){
+        else if ku2.estPossibleMouvement(partie : self, position : ku1.positionPiece()!){
             return !fin
         }
-        else if ko1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ko1.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
-        else if ko2.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ko2.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
-        else if ki1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ki1.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
-        else if ki2.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ki2.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
-        else if ta1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ta1.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
-        else if ta2.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ta2.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
-        else if ku1.estPossibleMouvement(partie : self, position : ku2.positionPiece()){
+        else if ku1.estPossibleMouvement(partie : self, position : ku2.positionPiece()!){
             return !fin
         }
     }
@@ -91,29 +96,45 @@ struct TPartie {
     }
 
     func pieceAPosition(pos : [Int]) -> TPiece?{
-        if ko1.positionPiece() == pos {
-            return ko1
+        if let position = ko1.positionPiece(){
+            if ko1.positionPiece()! == pos {
+                return ko1
+            }
         }
-        else if ko2.positionPiece() == pos {
-            return ko2
+        else if let position = ko2.positionPiece(){
+            if ko2.positionPiece()! == pos {
+                return ko2
+            }
         }
-        else if ki1.positionPiece() == pos{
-            return ki1
+        else if let position = ki1.positionPiece(){
+            if ki1.positionPiece()! == pos{
+                return ki1
+            }
         }
-        else if ki2.positionPiece() == pos{
-            return ki2
+        else if let position = ki2.positionPiece(){
+            if ki2.positionPiece()! == pos{
+                return ki2
+            }
         }
-        else if ta1.positionPiece() == pos{
-            return ta1
+        else if let position = ta1.positionPiece(){
+            if ta1.positionPiece()! == pos{
+                return ta1
+            }
         }
-        else if ta2.positionPiece() == pos{
-            return ta2
+        else if let position = ta2.positionPiece(){
+            if ta2.positionPiece()! == pos{
+                return ta2
+            }
         }
-        else if ku1.positionPiece() == pos{
-            return ku1
+        else if let position = ku1.positionPiece(){
+            if ku1.positionPiece()! == pos{
+                return ku1
+            }
         }
-        else if ku2.positionPiece() == pos{
-            return ku2
+        else if let position = ku2.positionPiece(){
+            if ku2.positionPiece()! == pos{
+                return ku2
+            }
         }
         else {
             return nil
@@ -121,7 +142,7 @@ struct TPartie {
     }
     
     func Est_libre(pos : [Int]) -> Bool{
-        return self.pieceAPosition(pos) == nil
+        return self.pieceAPosition(pos : pos) == nil
     }
     
     func derniereLigne(joueur : Int) -> Int{
@@ -143,8 +164,8 @@ struct TPartie {
             self.PartieFini()
         }
     }
-
-    struct ItTotalPieceIT : TotalPieceIT {
+}
+    struct ItTotalPieceIT {
     
     internal var pieces : [TPiece]
     internal var courant : TPiece?
@@ -155,7 +176,7 @@ struct TPartie {
     }
     
     mutating func next()->TPiece?{
-        if !self.courant == nil{
+        if let courant = self.courant{
             var t = true
             var i = 0
             while t {
@@ -163,7 +184,7 @@ struct TPartie {
                     self.courant = nil
                     t = false
                 }
-                else if self.courant == self.pieces[i] {
+                else if self.courant!.nom == self.pieces[i].nom && self.courant!.joueur == self.pieces[i].joueur {//test si c'est la même pièce
                     self.courant = self.pieces[i+1]
                     t = false
                 }
@@ -175,7 +196,7 @@ struct TPartie {
         return self.courant
     }
 }
-struct TPiece : Piece{
+struct TPiece{
 
     internal var pos : [Int]?
     internal var nom : String
@@ -189,7 +210,7 @@ struct TPiece : Piece{
     
     
     init(position : [Int], nom : String, partie : TPartie) throws {
-        guard position.count() == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.EstLibre(pos : position)else{
+        guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.Est_libre(pos : position)else{
             throw Erreur.mauvaisparametre
         }
         guard nom == "Koropokkuru" || nom == "Tanuki" || nom == "Kitsune" else {throw Erreur.mauvaisparametre}
@@ -218,30 +239,17 @@ struct TPiece : Piece{
     }
     
     func estPossibleMouvement(partie : TPartie, position : [Int]) -> Bool{
-        if self.pos != nil && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && (partie.pieceAPosition(pos : position) == nil || partie.pieceAPosition(pos : position).proprietairePiece() != self.proprietairePiece()){
-            if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
-                if (self.pos[0]+1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1]+1 == position[1]) {
-                    return true
-                }
-                else {
-                    return false
+        if let positionPiece = partie.pieceAPosition(pos : position) {
+            if (self.pos != nil) && (-1 < position[0]) && (position[0] < 4) && (-1 < position[1]) && (position[1] < 3) && (partie.pieceAPosition(pos : position)!.proprietairePiece() != self.proprietairePiece()){
+                if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
+                    return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1])
                 }
             }
             else if self.nom == "Tanuki"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
-                if (self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
-                    return true
-                }
-                else {
-                    return false
-                }
+                return (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
             }
             else { // c'est un Koropokkuru
-                if (self.pos[0]+1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
-                    return true
-                }
-                else {
-                    return false
-                }
+                return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
             }
         }
         else{
@@ -268,7 +276,8 @@ struct TPiece : Piece{
             self.pos = nouvellePos
         }
         else{
-            partie.pieceAPosition(pos : nouvellePos).etreCapturee()
+            var piece = partie.pieceAPosition(pos : nouvellePos)!
+            piece.etreCapturee()
             self.pos = nouvellePos
         }
         return partie
@@ -313,7 +322,7 @@ struct TKodama : TPiece {
 
 
     init(position : [Int], partie : TPartie) throws {
-        guard position.count() == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.EstLibre(pos : position)else{
+        guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.Est_libre(pos : position)else{
             throw Erreur.mauvaisparametre
         }
         self.pos = position
@@ -330,7 +339,7 @@ struct TKodama : TPiece {
         if self.pos != nil && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.pieceAPosition(pos : position) == nil{
             if self.estTransforme(){
                 if self.proprietairePiece() == 1 {
-                    if (self.pos[0]+1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
+                    if (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
                         return true
                     }
                     else {
@@ -338,7 +347,7 @@ struct TKodama : TPiece {
                     }
                 }
                 else{
-                    if (self.pos[0]-1 == position[0] && self.pos[1]+1 == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0]+1 == position[0] && self.pos[1] == position[1]) || (self.pos[0]-1 == position[0] && self.pos[1] == position[1]) || (self.pos[0] == position[0] && self.pos[1]-1 == position[1]) || (self.pos[0] == position[0] && self.pos[1]+1 == position[1]) {
+                    if (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![etrecapt1]+1 == position[1]) {
                         return true
                     }
                     else{
@@ -418,12 +427,12 @@ struct TKodama : TPiece {
     func estTransforme()->Bool {
         return self.trans
     }
-
-    struct TPieceJIT : PieceJIT {
+}
+struct TPieceJIT{
     
     internal var pieces : [TPiece]
     internal var courant : TPiece?
-    internal var pieceJ : [Tpiece]
+    internal var pieceJ : [TPiece]
     
     init (joueur : Int, partie : TPartie) {
         var p : [TPiece] = [partie.ko1,partie.ko2,partie.ki1,partie.ki2,partie.ta1,partie.ta2,partie.ku1,partie.ku2]
@@ -455,9 +464,6 @@ struct TKodama : TPiece {
         }
         return self.courant
     }
-
-import Foundation
-import prot
 
 func main(){
     // Programme principal
