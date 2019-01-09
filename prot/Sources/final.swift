@@ -14,9 +14,10 @@ struct TPartie {
     internal var ku1 : TPiece
     internal var ku2 : TPiece
     internal var joueurA : Int
-    //private var pieces : [TPiece] =
+    internal var tableau : [TPiece]
     
-    init(){
+    
+    init() {
         do{
             try self.ko1 = TPiece(position : [1,1], nom : "Kodoma", partie : self)}
         catch {
@@ -53,9 +54,10 @@ struct TPartie {
             try self.joueurA = Int(arc4random_uniform(UInt32(2)))+1}
         catch {
         }
+        self.tableau = [self.ko1,self.ko2,self.ki1,self.ki2,self.ta1,self.ta2,self.ku1,self.ku2]
     }
     
-    func PartieFini() -> Bool {
+    func partieFini() -> Bool {
         var fin : Bool = false
         if ku1.proprietairePiece() == 2 || ku2.proprietairePiece() == 1 {
             return !fin
@@ -172,6 +174,14 @@ struct TPartie {
         return self.pieceAPosition(pos : pos) == nil
     }
     
+    func pieceJIT(joueur : Int) -> TPieceJIT{
+        return TPieceJIT(joueur : joueur, partie : self)
+    }
+    
+    func makeIT() -> ItTotalPieceIT{
+        return ItTotalPieceIT (partie : self)
+    }
+    
     func derniereLigne(joueur : Int) -> Int{
         if joueur == 1 {
             return 3
@@ -184,11 +194,11 @@ struct TPartie {
     mutating func gagner(joueur :Int){
         if joueur == 2 {
             print("le joueur 2 a gagné")
-            self.PartieFini()
+            self.partieFini()
         }
         else{
             print("le joueur 1 a gagné")
-            self.PartieFini()
+            self.partieFini()
         }
     }
 }
@@ -339,7 +349,7 @@ struct TPiece{
     }
 }
 
-struct TKodama : TPiece {
+struct TKodama{
     internal var pos : [Int]?
     internal var nom : String = "Kodama"
     internal var partie : TPartie
@@ -362,6 +372,28 @@ struct TKodama : TPiece {
         }
         else {
             self.joueur = 2
+        }
+    }
+    func typePiece() -> String{
+        return self.nom
+    }
+    
+    func positionPiece() -> [Int]?{
+        return self.pos
+    }
+    
+    func proprietairePiece()->Int{
+        return self.joueur
+    }
+    
+    func estParachutagePossible(partie : TPartie, position : [Int]) -> Bool{
+        if self.pos == nil && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3{
+            if partie.pieceAPosition(pos : position) == nil {
+                return true
+            }
+            else{
+                return false
+            }
         }
     }
 
@@ -408,7 +440,7 @@ struct TKodama : TPiece {
             return false
         }
     }
-
+    
 
 
     mutating func deplacerPiece(partie : TPartie, nouvellePos : [Int]) throws -> TPartie{
@@ -446,16 +478,27 @@ struct TKodama : TPiece {
         guard !self.trans else{
             throw Erreur.mauvaisparametre
         } 
-        if self.proprietairePiece() == 1 && pos[0] == 3{
+        if self.proprietairePiece() == 1 && pos![0] == 3{
             self.trans = true
         }
-        else if self.proprietairePiece() == 2 && pos[0] == 0{
+        else if self.proprietairePiece() == 2 && pos![0] == 0{
             self.trans = true
         }
     }
 
     func estTransforme()->Bool {
         return self.trans
+    }
+    mutating func parachuter(partie : TPartie, position : [Int]) throws -> TPartie{
+        guard self.pos != nil && self.estParachutagePossible(partie : partie, position : position) else{
+            throw Erreur.mauvaisparametre
+        }
+        self.pos = position
+        return partie
+    }
+    
+    func estDansReserve() -> Bool {
+        return self.pos == nil
     }
 }
 struct TPieceJIT{
@@ -496,18 +539,17 @@ struct TPieceJIT{
     }
 }
 
-/*func main(){
     // Programme principal
-    var p : TPartie = Partie() // init : Demarrer la partie
+    var p : TPartie // init : Demarrer la partie
     
     
-    while !(p.partieFinie()) {
+    while !(p.partieFini()) {
         // affiche l'etat du jeu
         print("tour du joueur \(p.joueurActif())")
         var str : String = ""
         for i in 0...3 {
             for j in 0...2 {
-                if let t = p.PieceAPosition(pos : [i,j]){
+                if let t = p.pieceAPosition(pos : [i,j]){
                     str += t.typePiece()
                 }else{
                     str += " CASE VIDE "
@@ -517,9 +559,9 @@ struct TPieceJIT{
             str=""
         }
         var str2 : String
-        for piece in p{ // utilise iterateur normal sur toutes les pieces
+        for piece in p.tableau{ // utilise iterateur normal sur toutes les pieces
             if piece.estDansReserve(){
-                if piece.proprietaire()==1{
+                if piece.proprietairePiece()==1{
                     str+=piece.typePiece()
                 }else{
                     str2+=piece.typePiece()
@@ -546,79 +588,82 @@ struct TPieceJIT{
                     print("Choisis la piece a parachuter")
                     
                     // on parcourt les pieces de la reserve de JActif
-                    var it : TPiecesJIT = p.piecesJIT(joueur : p.joueurActif())
+                    var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
                     
-                    while let piece=it.next() && !repV{
-                        if piece.estDansReserve(){
-                            
-                            // Choix de la piece ou pas
-                            print("Choisis un \(piece.typePiece()) ? y/n")
-                            if let entree = readLine(){
-                                if entree == "y"{// s'il choisi cette piece
-                                    print("Choisis la ligne a parachuter")
-                                    if let entree = readLine(){
-                                        if let posLigne = Int(entree){
-                                            print("Choisis la colonne a parachuter")
+                    while let piece=it.next(){
+                        while !repV{
+                            if piece.estDansReserve(){
+                                // Choix de la piece ou pas
+                                print("Choisis un \(piece.typePiece()) ? y/n")
+                                if let entree = readLine(){
+                                    if entree == "y"{// s'il choisi cette piece
+                                        print("Choisis la ligne a parachuter")
+                                        if let entree = readLine(){
+                                            if let posLigne = Int(entree){
+                                                print("Choisis la colonne a parachuter")
                                             
-                                            if let entree = readLine(){
-                                                if let posCol = Int(entree){
-                                                    if piece.estParachutagePossible(partie : p, position : [posLigne,posCol]){
-                                                        
-                                                        pChoisie = piece
-                                                        posChoisie = [posLigne, posCol]
-                                                        repV = true
-                                                    } else {
-                                                        print("Il n'est pas possible de parachuter a cet endroit")
+                                                if let entree = readLine(){
+                                                    if let posCol = Int(entree){
+                                                        if piece.estParachutagePossible(partie : p, position : [posLigne,posCol]){
+                                                            pChoisie = piece
+                                                            posChoisie = [posLigne, posCol]
+                                                            repV = true
+                                                        }
+                                                        else {
+                                                            print("Il n'est pas possible de parachuter a cet endroit")
+                                                        }
                                                     }
-                                                }else{
-                                                    print("Il fallait ecrire un entier!")
+                                                    else{
+                                                        print("Il fallait ecrire un entier!")
+                                                    }
                                                 }
-                                            }
                                             
-                                        }else{
-                                            print("Il fallait ecrire un entier!")
+                                            }
+                                            else{
+                                                print("Il fallait ecrire un entier!")
+                                            }
                                         }
                                     }
                                 }
                             }
                         }
                     }
-                    
                 } else if entree == "d" { // deplacer
                     
                     print("Choisis la piece a deplacer")
                     
                     // on parcourt les pieces de la reserve de JActif
-                    var it : TPiecesJIT = p.piecesJIT(joueur : p.joueurActif())
-                    while let piece = it.next() && !repV{
-                        if let pos = piece.position(){
-                            
-                            // Choix de la piece ou pas
-                            print("Deplacer le \(piece.typePiece()) placee a \(pos) ? y/n")
-                            if let entree = readLine(){
-                                if entree == "y"{// s'il choisi cette piece
-                                    print("Choisis la ligne d'arrivee du deplacement")
-                                    if let entree = readLine(){
-                                        if let posLigne = Int(entree){
-                                            print("Choisis la colonne d'arrivee du deplacement")
-                                            
-                                            if let entree = readLine(){
-                                                if let posCol = Int(entree){
-                                                    if piece.estPossibleMouvement(partie : p, position : [posLigne,posCol]){
-                                                        
-                                                        pChoisie = piece
-                                                        posChoisie = [posLigne, posCol]
-                                                        repV = true
-                                                    } else {
-                                                        print("Il n'est pas possible de deplacer cette piece a cet endroit")
+                    var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
+                    while let piece = it.next(){
+                        while !repV{
+                            if let pos = piece.positionPiece(){
+                                // Choix de la piece ou pas
+                                print("Deplacer le \(piece.typePiece()) placee a \(pos) ? y/n")
+                                if let entree = readLine(){
+                                    if entree == "y"{// s'il choisi cette piece
+                                        print("Choisis la ligne d'arrivee du deplacement")
+                                        if let entree = readLine(){
+                                            if let posLigne = Int(entree){
+                                                print("Choisis la colonne d'arrivee du deplacement")
+                                                if let entree = readLine(){
+                                                    if let posCol = Int(entree){
+                                                        if piece.estPossibleMouvement(partie : p, position : [posLigne,posCol]){
+                                                            pChoisie = piece
+                                                            posChoisie = [posLigne, posCol]
+                                                            repV = true
+                                                        }
+                                                        else {
+                                                            print("Il n'est pas possible de deplacer cette piece a cet endroit")
+                                                        }
                                                     }
-                                                }else{ 
-                                                    print("Il fallait ecrire un entier!")
+                                                    else{
+                                                        print("Il fallait ecrire un entier!")
+                                                    }
                                                 }
                                             }
-                                            
-                                        }else{ 
-                                            print("Il fallait ecrire un entier!")
+                                            else{
+                                                print("Il fallait ecrire un entier!")
+                                            }
                                         }
                                     }
                                 }
@@ -635,18 +680,24 @@ struct TPieceJIT{
         
         
         // Action principale du tour
-        if let pChoisie = pChoisie{
+        if var pChoisie = pChoisie{
             if let posChoisie = posChoisie{
                 
                 if !pChoisie.estDansReserve(){// si c'est un deplacement
-                    p = pChoisie.deplacerPiece(partie : p, nouvellePos : posChoisie) // on considere la capture comme un deplacement (on peut gagner la partie ici)
+                    do {
+                        try p = pChoisie.deplacerPiece(partie : p, nouvellePos : posChoisie)}// on considere la capture comme un deplacement (on peut gagner la partie ici)
+                    catch {
+                    }
                 }else{// si c'est un parachutage
-                    p = pChoisie.parachuter(partie : p, position : posChoisie)
+                    do {
+                        try p = pChoisie.parachuter(partie : p, position : posChoisie)}
+                    catch{
+                    }
                 }
             }
         }
         
-        if p.partieFinie(){
+        if p.partieFini(){
         
             print("Le joueur \(p.joueurActif()) gagne la partie")
             
@@ -657,10 +708,10 @@ struct TPieceJIT{
         
         
         //Le joueur gagne si son roi est dans la derniere ligne au debut de son tour (s'il met son roi dans la derniere ligne et ne se fais pas manger)
-        var it : TPiecesJIT = p.piecesJIT(joueur : p.joueurActif())
+        var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
         while let piece=it.next(){
             
-            if let pos = piece.position(){
+            if let pos = piece.positionPiece(){
                 
                 if piece.typePiece() == "Kuropokkuru"{
                     
@@ -672,7 +723,7 @@ struct TPieceJIT{
         }
         
         
-        if p.partieFinie(){
+        if p.partieFini(){
             
             print("Le joueur \(p.joueurActif()) gagne la partie")
             
@@ -680,4 +731,4 @@ struct TPieceJIT{
         
         // c'est mis a la fin du while pour ne pas refaire un tour en trop
     }
-}*/
+

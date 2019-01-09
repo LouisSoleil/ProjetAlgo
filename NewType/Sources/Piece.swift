@@ -1,13 +1,17 @@
+
 protocol Piece {
-    
-    associatedtype Partie : Partie
+
+    associatedtype SPartie : Partie
+    associatedtype SPiece : Piece
+
+ 
     
     // Description : Crée une pièce
     // Données : Un tableau de 2 entiers [x,y] correspondant à la position initiale,(ligne, colonne) et une chaine de caractères correspondant au nom de la pièce, partie : Partie
     // Préconditions : x appartient à [0,3], y appartient à [0,2], [x,y] est une position inoccupée, le nom de la pièce appartient à {"Koropokkuru", "Tanuki", "Kitsune"} (si tu veut créer un kodama, créée un objet de type Kodama)
     // Résultat : Pièce créée à la position indiquée
     // Lance une erreur si la position est déjà occupée par une pièce ou si le nom de la pièce n'existe pas
-    init(position : [Int], nom : String, partie : Partie) throws
+    init(position : [Int], nom : String, partie : SPartie) throws
     
     //Description : Renvoie le type d'une pièce
     //Résultat : String, nom de la pièce
@@ -31,14 +35,14 @@ protocol Piece {
     //	     Si la pièce est un Koropokkuru, elle peut se déplacer d'une case dans tous les sens
     //	     Si la pièce est un Tanuki, elle peut se déplacer d'une case en avant, en arrière, à droite ou à gauche
     //	     Si la pièce est un Kitsune, elle peut se déplacer d'une case dans une des diagonales
-    func estPossibleMouvement(partie : Partie, position : [Int]) -> Bool
+    func estPossibleMouvement(partie : SPartie, position : [Int]) -> Bool
     
     //Description : Détermine si le parachutage d'une pièce vers une position est possible
     //Données :  partie : Partie, position : [Int](2) correspondant à la position vers laquelle la pièce doit être déplacée (la nouvelle position)
     //Préconditions : positionPiece(p)==Vide
     //Résultat : Booléen, true si le mouvement correspond à la pièce, si la position existe et est inoccupée
     //	     false sinon
-    func estParachutagePossible(partie : Partie, position : [Int]) -> Bool
+    func estParachutagePossible(partie : SPartie, position : [Int]) -> Bool
     
     //Description : Déplace une pièce vers une autre position
     //Données : nouvellePos : [Int](2)
@@ -47,7 +51,7 @@ protocol Piece {
     // Lance une erreur si le mouvement n'est pas possible 
     // Si la piece arrive sur une piece adverse (c'est pour ça qu'on a besoin de la partie), on capture la piece adverse (la partie renvoyée est la partie aprés le deplacement)
     // Si on capture le Koropokkuru adverse, on gagne la partie
-    mutating func deplacerPiece(partie : Partie, nouvellePos : [Int]) throws -> Partie
+    mutating func deplacerPiece(partie : SPartie, nouvellePos : [Int]) throws -> SPartie
     
     //Description : Change le propriétaire d'une pièce et la place dans la réserve du nouveau propriétaire lorsque la pièce d'un joueur se pose sur la pièce d'un autre joueur
     //Préconditions : La position de p n'est pas Vide
@@ -62,7 +66,7 @@ protocol Piece {
     // Résultat : La même pièce qui a désormais une position sur le plateau
     // Lance une erreur si la pièce n'est pas en réserve ou si la position est déjà occupée
     // Post-conditions : positionPiece(p)!=Vide
-    mutating func parachuter(partie : Partie, position : [Int]) throws -> Partie
+    mutating func parachuter(partie : SPartie, position : [Int]) throws -> SPartie
     
     
     //Description : Détermine si une pièce est dans la réserve
@@ -84,7 +88,7 @@ protocol Kodama : Piece { // Apres recherche, les override se font dans les clas
     //Préconditions : position est une position inoccupée sur la partie
     //Résultat : Kodama créé à la position correspondante
     //Post-conditions : position(k)!=Vide
-    init(position : [Int], partie : Partie)
+    init(position : [Int], partie : SPartie)
     
     //Description : Renvoie le type d'une pièce
     //Résultat : String, nom de la pièce
@@ -105,7 +109,7 @@ protocol Kodama : Piece { // Apres recherche, les override se font dans les clas
     //Préconditions : positionPiece(k)!=Vide
     //Résultat : La même pièce avec une nouvelle position si le mouvement est possible
     // lance une erreur si le mouvement n'est pas possible
-    mutating func deplacerPiece(partie : Partie, nouvellePos : [Int]) throws -> Partie
+    mutating func deplacerPiece(partie : Partie, nouvellePos : [Int]) throws -> SPartie
     
     //Description : Change le propriétaire d'un Kodama et la place dans la réserve du nouveau propriétaire, en annulant sa transformation si le Kodama était samuraï (etait transformé)
     //Données : prop : Int
