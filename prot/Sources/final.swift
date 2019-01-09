@@ -17,15 +17,42 @@ struct TPartie {
     //private var pieces : [TPiece] =
     
     init(){
-        self.ko1 = TPiece(position : [1,1], nom : "Kodoma", partie : self)
-        self.ko2 = TPiece(position : [2,1], nom : "Kodoma", partie : self)
-        self.ki1 = TPiece(position : [0,2], nom : "Kitsune", partie : self)
-        self.ki2 = TPiece(position : [3,0], nom : "Kitsune", partie : self)
-        self.ta1 = TPiece(position : [0,0], nom : "Tanuki", partie : self)
-        self.ta2 = TPiece(position : [3,3], nom : "Tanuki", partie : self)
-        self.ku1 = TPiece(position : [0,1], nom : "Kuropokkuru", partie : self)
-        self.ku2 = TPiece(position : [3,1], nom : "Kuropokkuru", partie : self)
-        self.joueurA = Int(arc4random_uniform(UInt32(2)))+1
+        do{
+            try self.ko1 = TPiece(position : [1,1], nom : "Kodoma", partie : self)}
+        catch {
+            }
+        do {
+            try self.ko2 = TPiece(position : [2,1], nom : "Kodoma", partie : self)}
+        catch {
+        }
+        do {
+            try self.ki1 = TPiece(position : [0,2], nom : "Kitsune", partie : self)}
+        catch {
+        }
+        do{
+            try self.ki2 = TPiece(position : [3,0], nom : "Kitsune", partie : self)}
+        catch {
+        }
+        do{
+            try self.ta1 = TPiece(position : [0,0], nom : "Tanuki", partie : self)}
+        catch {
+        }
+        do{
+            try self.ta2 = TPiece(position : [3,3], nom : "Tanuki", partie : self)}
+        catch {
+        }
+        do{
+            try self.ku1 = TPiece(position : [0,1], nom : "Kuropokkuru", partie : self)}
+        catch {
+        }
+        do{
+            try self.ku2 = TPiece(position : [3,1], nom : "Kuropokkuru", partie : self)}
+        catch {
+        }
+        do{
+            try self.joueurA = Int(arc4random_uniform(UInt32(2)))+1}
+        catch {
+        }
     }
     
     func PartieFini() -> Bool {
@@ -277,7 +304,10 @@ struct TPiece{
         }
         else{
             var piece = partie.pieceAPosition(pos : nouvellePos)!
-            piece.etreCapturee()
+            do{
+                try piece.etreCapturee()}
+            catch {
+            }
             self.pos = nouvellePos
         }
         return partie
@@ -335,7 +365,7 @@ struct TKodama : TPiece {
         }
     }
 
-    func estPossibleMouvement(position : [Int], partie : TPartie) -> Bool{
+    func estPossibleMouvement(partie : TPartie, position : [Int]) -> Bool{
         if self.pos != nil && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.pieceAPosition(pos : position) == nil{
             if self.estTransforme(){
                 if self.proprietairePiece() == 1 {
@@ -347,7 +377,7 @@ struct TKodama : TPiece {
                     }
                 }
                 else{
-                    if (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![etrecapt1]+1 == position[1]) {
+                    if (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
                         return true
                     }
                     else{
@@ -357,7 +387,7 @@ struct TKodama : TPiece {
             }
             else { // Kodama samuraï
                 if self.proprietairePiece() == 1 {
-                    if self.pos[0]+1 == position[0] && self.pos[1] == position[1] {
+                    if self.pos![0]+1 == position[0] && self.pos![1] == position[1] {
                         return true
                     }
                     else {
@@ -365,7 +395,7 @@ struct TKodama : TPiece {
                     }
                 }
                 else{
-                    if self.pos[0]-1 == position[0] && self.pos[1] == position[1] {
+                    if self.pos![0]-1 == position[0] && self.pos![1] == position[1] {
                         return true
                     }
                     else {
@@ -443,9 +473,9 @@ struct TPieceJIT{
             }
         }
     }
-}
+
     mutating func next()->TPiece?{
-        if !self.courant == nil{
+        if let courant = self.courant{
             var t = true
             var i = 0
             while t {
@@ -453,7 +483,7 @@ struct TPieceJIT{
                     self.courant = nil
                     t = false
                 }
-                else if self.courant == self.pieces[i] {
+                else if self.courant!.nom == self.pieces[i].nom && self.courant!.joueur == self.pieces[i].joueur {
                     self.courant = self.pieces[i+1]
                     t = false
                 }
@@ -464,10 +494,11 @@ struct TPieceJIT{
         }
         return self.courant
     }
+}
 
-func main(){
+/*func main(){
     // Programme principal
-    var p : Partie = Partie() // init : Demarrer la partie
+    var p : TPartie = Partie() // init : Demarrer la partie
     
     
     while !(p.partieFinie()) {
@@ -500,7 +531,7 @@ func main(){
         // Choix de l'action du joueur
         
         var repV : Bool  = false
-        var pChoisie : Piece?
+        var pChoisie : TPiece?
         var posChoisie : [Int]?
         
         
@@ -515,7 +546,7 @@ func main(){
                     print("Choisis la piece a parachuter")
                     
                     // on parcourt les pieces de la reserve de JActif
-                    var it : PiecesJIT = p.piecesJIT(joueur : p.joueurActif())
+                    var it : TPiecesJIT = p.piecesJIT(joueur : p.joueurActif())
                     
                     while let piece=it.next() && !repV{
                         if piece.estDansReserve(){
@@ -558,7 +589,7 @@ func main(){
                     print("Choisis la piece a deplacer")
                     
                     // on parcourt les pieces de la reserve de JActif
-                    var it : PiecesJIT = p.piecesJIT(joueur : p.joueurActif())
+                    var it : TPiecesJIT = p.piecesJIT(joueur : p.joueurActif())
                     while let piece = it.next() && !repV{
                         if let pos = piece.position(){
                             
@@ -626,7 +657,7 @@ func main(){
         
         
         //Le joueur gagne si son roi est dans la derniere ligne au debut de son tour (s'il met son roi dans la derniere ligne et ne se fais pas manger)
-        var it : PiecesJIT = p.piecesJIT(joueur : p.joueurActif())
+        var it : TPiecesJIT = p.piecesJIT(joueur : p.joueurActif())
         while let piece=it.next(){
             
             if let pos = piece.position(){
@@ -649,4 +680,4 @@ func main(){
         
         // c'est mis a la fin du while pour ne pas refaire un tour en trop
     }
-}
+}*/
