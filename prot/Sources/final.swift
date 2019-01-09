@@ -2,7 +2,7 @@
 
 import Foundation
 //import prot
-
+//ceci est un test 
 
 struct TPartie {
     internal var ko1 : TPiece
