@@ -1,7 +1,7 @@
 
 protocol Piece {
 
-    associatedtype SPartie : Partie
+    associatedtype SPartie = Partie
 
  
     
@@ -10,7 +10,7 @@ protocol Piece {
     // Préconditions : x appartient à [0,3], y appartient à [0,2], [x,y] est une position inoccupée, le nom de la pièce appartient à {"Koropokkuru", "Tanuki", "Kitsune"} (si tu veut créer un kodama, créée un objet de type Kodama)
     // Résultat : Pièce créée à la position indiquée
     // Lance une erreur si la position est déjà occupée par une pièce ou si le nom de la pièce n'existe pas
-    init(position : [Int], nom : String, partie : SPartie) throws
+    init(position : [Int], nom : String) throws
     
     //Description : Renvoie le type d'une pièce
     //Résultat : String, nom de la pièce

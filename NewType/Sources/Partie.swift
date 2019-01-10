@@ -1,7 +1,7 @@
 protocol AttPartie {
-    associatedtype SItTotalPieceIT : TotalPieceIT
-    associatedtype SPieceJIT : PieceJIT
-    associatedtype SPiece : Piece
+    associatedtype SItTotalPieceIT = TotalPieceIT
+    associatedtype SPieceJIT = PieceJIT
+    associatedtype SPiece = Piece
     
     // Renvoie la piece a cette position s'il y en a une, Vide sinon
     // pre : Il s'agit d'une position : pos[0] est la ligne, entre 0 et 3, pos[1] est la colonne, entre 0 et 2, il n'y a que 2 arguments (ligne et colonne)

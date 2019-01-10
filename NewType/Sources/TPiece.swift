@@ -14,7 +14,7 @@ struct TPiece : Piece{
     }
     
     
-    init(position : [Int], nom : String, partie : TPartie) throws {
+    init(position : [Int], nom : String) throws {
         guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.Est_libre(pos : position)else{
             throw Erreur.mauvaisparametre
         }
@@ -22,7 +22,6 @@ struct TPiece : Piece{
         
         self.pos = position
         self.nom = nom
-        self.partie = partie
         if position[0] == 0 || position[0] == 1 {
             self.joueur = 1
         }
@@ -134,7 +133,6 @@ struct TKodama{
             throw Erreur.mauvaisparametre
         }
         self.pos = position
-        self.partie = partie
         if position[0] == 0 || position[0] == 1 {
             self.joueur = 1
         }

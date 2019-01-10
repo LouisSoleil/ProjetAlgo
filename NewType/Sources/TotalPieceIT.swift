@@ -3,8 +3,8 @@ protocol TotalPieceIT : TTotalPieceIT {
 }
 protocol TTotalPieceIT : IteratorProtocol{
     
-    associatedtype SPiece : Piece
-    associatedtype SPartie : Partie
+    associatedtype SPiece = Piece
+    associatedtype SPartie = Partie
 
 
     //crée un iterateur avec toutes les pieces de la partie

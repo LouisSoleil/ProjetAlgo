@@ -3,8 +3,8 @@ protocol PieceJIT : PPieceJIT {
 }
 protocol PPieceJIT : IteratorProtocol{
     
-    associatedtype SPiece : Piece
-    associatedtype SPartie : Partie
+    associatedtype SPiece = Piece
+    associatedtype SPartie = Partie
     
     // Crée l'iterateur avec les pieces du joueur en entrée
     //    pre : joueur == 1 ou joueur == 2 
