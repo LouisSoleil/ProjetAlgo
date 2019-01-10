@@ -1,3 +1,4 @@
+
 protocol Piece {
 
     associatedtype SPartie = Partie
@@ -29,17 +30,17 @@ protocol Piece {
     //Données : partie : Partie, position : [Int](2) correspondant à la position vers laquelle la pièce doit être déplacée (la nouvelle position)
     //Préconditions : positionPiece(p)!=Vide
     //Résultat : Booléen, true si le mouvement correspond à la pièce, si la position existe et est inoccupée par une pièce du même joueur(le mouvement est possible si une piece adverse occupe la case),
-    //       false sinon
-    //       Si la pièce est un Koropokkuru, elle peut se déplacer d'une case dans tous les sens
-    //       Si la pièce est un Tanuki, elle peut se déplacer d'une case en avant, en arrière, à droite ou à gauche
-    //       Si la pièce est un Kitsune, elle peut se déplacer d'une case dans une des diagonales
+    //	     false sinon
+    //	     Si la pièce est un Koropokkuru, elle peut se déplacer d'une case dans tous les sens
+    //	     Si la pièce est un Tanuki, elle peut se déplacer d'une case en avant, en arrière, à droite ou à gauche
+    //	     Si la pièce est un Kitsune, elle peut se déplacer d'une case dans une des diagonales
     func estPossibleMouvement(partie : SPartie, position : [Int]) -> Bool
     
     //Description : Détermine si le parachutage d'une pièce vers une position est possible
     //Données :  partie : Partie, position : [Int](2) correspondant à la position vers laquelle la pièce doit être déplacée (la nouvelle position)
     //Préconditions : positionPiece(p)==Vide
     //Résultat : Booléen, true si le mouvement correspond à la pièce, si la position existe et est inoccupée
-    //       false sinon
+    //	     false sinon
     func estParachutagePossible(partie : SPartie, position : [Int]) -> Bool
     
     //Description : Déplace une pièce vers une autre position
@@ -97,8 +98,8 @@ protocol Kodama : Piece { // Apres recherche, les override se font dans les clas
     //Données : nouvellePos : [Int](2), partie : Partie
     //Préconditions : positionPiece(kodama)!=vide
     //Résultat : Booleen, true si le mouvement est possible c'est à dire si le mouvement  correspond au Kodama, et si la case existe et est inoccupée,
-    //       false sinon
-    //       Un Kodama ne peut se déplacer que d'une case vers l'avant (vers la derniere ligne de son proprietaire),
+    // 	     false sinon
+    //	     Un Kodama ne peut se déplacer que d'une case vers l'avant (vers la derniere ligne de son proprietaire),
     //       Un Kodama samuraï (transformé) peut se déplacer d'une case dans tous les sens sauf dans les diagonales arrières (vers l'opposé de la derniere ligne de son proprietaire)
     func estPossibleMouvement(nouvellePos : [Int], partie : Partie) -> Bool
     
@@ -127,3 +128,4 @@ protocol Kodama : Piece { // Apres recherche, les override se font dans les clas
     func estTransforme()->Bool 
 
 }
+

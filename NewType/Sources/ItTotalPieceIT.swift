@@ -6,7 +6,7 @@ struct ItTotalPieceIT {
     internal var courant : TPiece?
     
     init(partie : TPartie){
-        self.pieces = [partie.ko1, partie.ko2, partie.ki1, partie.ki2, partie.ta1, partie.ta2, partie.ku1, partie.ku2]
+        self.pieces = [partie.ko1,partie.ko2,partie.ki1,partie.ki2,partie.ta1,partie.ta2,partie.ku1,partie.ku2]
         self.courant = partie.ko1
     }
     

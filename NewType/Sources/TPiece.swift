@@ -5,8 +5,9 @@ struct TPiece : Piece{
     
     internal var pos : [Int]?
     internal var nom : String
-    internal var partie : TPartie
     internal var joueur : Int
+    internal var trans : Bool = false
+
     
     
     enum Erreur : Error {
@@ -14,15 +15,14 @@ struct TPiece : Piece{
     }
     
     
-    init(position : [Int], nom : String, partie : TPartie) throws {
-        guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.Est_libre(pos : position)else{
+    init(position : [Int], nom : String) throws {
+        guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 else{
             throw Erreur.mauvaisparametre
         }
-        guard nom == "Koropokkuru" || nom == "Tanuki" || nom == "Kitsune" else {throw Erreur.mauvaisparametre}
+        guard nom == "Koropokkuru" || nom == "Tanuki" || nom == "Kitsune" || nom == "Kodama" else {throw Erreur.mauvaisparametre}
         
         self.pos = position
         self.nom = nom
-        self.partie = partie
         if position[0] == 0 || position[0] == 1 {
             self.joueur = 1
         }
@@ -49,12 +49,53 @@ struct TPiece : Piece{
                 if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
                     return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1])
                 }
+                else if self.nom == "Tanuki"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
+                    return (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
+                }
+                else if self.nom == "Kodama"{
+                    if self.estTransforme(){
+                        if self.proprietairePiece() == 1 {
+                            if (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        }
+                        else{
+                            if (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
+                                return true
+                            }
+                            else{
+                                return false
+                            }
+                        }
+                    }
+                    else { // Kodama samuraï
+                        if self.proprietairePiece() == 1 {
+                            if self.pos![0]+1 == position[0] && self.pos![1] == position[1] {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        }
+                        else{
+                            if self.pos![0]-1 == position[0] && self.pos![1] == position[1] {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        }
+                    }
+                }
+                else { // c'est un Koropokkuru
+                    return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
+                }
             }
-            else if self.nom == "Tanuki"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
-                return (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
-            }
-            else { // c'est un Koropokkuru
-                return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
+            else{
+                return false
             }
         }
         else{
@@ -70,6 +111,9 @@ struct TPiece : Piece{
             else{
                 return false
             }
+        }
+        else {
+            return false
         }
     }
     
@@ -87,6 +131,12 @@ struct TPiece : Piece{
             catch {
             }
             self.pos = nouvellePos
+            if self.nom == "Kodama" && self.proprietairePiece() == 1 && nouvellePos[0] == 3{
+                self.trans = true
+            }
+            else if self.nom == "Kodama" && self.proprietairePiece() == 2 && nouvellePos[0] == 0{
+                self.trans = true
+            }
         }
         return partie
     }
@@ -102,6 +152,11 @@ struct TPiece : Piece{
             self.joueur = 1
         }
         self.pos = nil
+        if self.nom == "Kodama"{
+            if self.estTransforme() {
+                self.trans = false
+            }
+        }
     }
     
     mutating func parachuter(partie : TPartie, position : [Int]) throws -> TPartie{
@@ -111,16 +166,31 @@ struct TPiece : Piece{
         self.pos = position
         return partie
     }
+
+    mutating func transformer() throws{
+        guard !self.trans else{
+            throw Erreur.mauvaisparametre
+        }
+        if self.proprietairePiece() == 1 && pos![0] == 3{
+            self.trans = true
+        }
+        else if self.proprietairePiece() == 2 && pos![0] == 0{
+            self.trans = true
+        }
+    }
+    
+    func estTransforme()->Bool {
+        return self.trans
+    }
     
     func estDansReserve() -> Bool {
         return self.pos == nil
     }
 }
 
-struct TKodama{
+/*struct TKodama{
     internal var pos : [Int]?
     internal var nom : String = "Kodama"
-    internal var partie : TPartie
     internal var joueur : Int
     internal var trans : Bool = false
     
@@ -129,12 +199,11 @@ struct TKodama{
     }
     
     
-    init(position : [Int], partie : TPartie) throws {
-        guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 && partie.Est_libre(pos : position)else{
+    init(position : [Int]) throws {
+        guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 else{
             throw Erreur.mauvaisparametre
         }
         self.pos = position
-        self.partie = partie
         if position[0] == 0 || position[0] == 1 {
             self.joueur = 1
         }
@@ -269,3 +338,4 @@ struct TKodama{
         return self.pos == nil
     }
 }
+ */

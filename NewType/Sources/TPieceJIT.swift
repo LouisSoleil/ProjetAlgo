@@ -2,9 +2,8 @@ struct TPieceJIT{
     typealias SPartie = TPartie
     typealias SPiece = TPiece
     
-    internal var pieces : [TPiece]
+    internal var pieces : [TPiece] = []
     internal var courant : TPiece?
-    internal var pieceJ : [TPiece]
     
     init (joueur : Int, partie : TPartie) {
         var p : [TPiece] = [partie.ko1,partie.ko2,partie.ki1,partie.ki2,partie.ta1,partie.ta2,partie.ku1,partie.ku2]
