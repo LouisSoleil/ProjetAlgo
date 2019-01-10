@@ -21,11 +21,19 @@ struct TPartie : Partie, AttPartie {
     
     init() {
         do{
+<<<<<<< HEAD
             try self.ko1 = TKodama(position : [1,1], nom : "Kodoma")}
         catch {
         }
         do {
             try self.ko2 = TKodama(position : [2,1], nom : "Kodoma")}
+=======
+            try self.ko1 = TPiece(position : [1,1], nom : "Kodoma")}
+        catch {
+        }
+        do {
+            try self.ko2 = TPiece(position : [2,1], nom : "Kodoma")}
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
         catch {
         }
         do {
@@ -54,8 +62,11 @@ struct TPartie : Partie, AttPartie {
         }
         do{
             try self.joueurA = 1} //Int(arc4random_uniform(UInt32(2)))+
+<<<<<<< HEAD
         catch {
         }
+=======
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
         self.tableau = [self.ko1,self.ko2,self.ki1,self.ki2,self.ta1,self.ta2,self.ku1,self.ku2]
     }
     
@@ -127,42 +138,74 @@ struct TPartie : Partie, AttPartie {
     }
     
     func pieceAPosition(pos : [Int]) -> TPiece?{
+<<<<<<< HEAD
         if let position = self.ko1.positionPiece(){
+=======
+        if let position = ko1.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ko1.positionPiece()! == pos {
                 return self.ko1
             }
         }
+<<<<<<< HEAD
         else if let position = self.ko2.positionPiece(){
+=======
+        else if let position = ko2.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ko2.positionPiece()! == pos {
                 return self.ko2
             }
         }
+<<<<<<< HEAD
         else if let position = self.ki1.positionPiece(){
+=======
+        else if let position = ki1.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ki1.positionPiece()! == pos{
                 return self.ki1
             }
         }
+<<<<<<< HEAD
         else if let position = self.ki2.positionPiece(){
+=======
+        else if let position = ki2.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ki2.positionPiece()! == pos{
                 return self.ki2
             }
         }
+<<<<<<< HEAD
         else if let position = self.ta1.positionPiece(){
+=======
+        else if let position = ta1.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ta1.positionPiece()! == pos{
                 return self.ta1
             }
         }
+<<<<<<< HEAD
         else if let position = self.ta2.positionPiece(){
+=======
+        else if let position = ta2.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ta2.positionPiece()! == pos{
                 return self.ta2
             }
         }
+<<<<<<< HEAD
         else if let position = self.ku1.positionPiece(){
+=======
+        else if let position = ku1.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ku1.positionPiece()! == pos{
                 return self.ku1
             }
         }
+<<<<<<< HEAD
         else if let position = self.ku2.positionPiece(){
+=======
+        else if let position = ku2.positionPiece(){
+>>>>>>> 2791aa5dfb7b07c440927493319300d6479adc2c
             if self.ku2.positionPiece()! == pos{
                 return self.ku2
             }
