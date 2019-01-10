@@ -1,5 +1,5 @@
 import Foundation
-//import Type
+import FinalType
 
 // Programme principal
 var p : TPartie = TPartie()// init : Demarrer la partie
@@ -20,7 +20,7 @@ while !(p.partieFini()) {
         print(str)
         str=""
     }
-    var str2 : String
+    var str2 : String = ""
     for piece in p.tableau{ // utilise iterateur normal sur toutes les pieces
         if piece.estDansReserve(){
             if piece.proprietairePiece()==1{

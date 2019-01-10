@@ -4,10 +4,14 @@
 import PackageDescription
 
 let package = Package(
-    name: "Main",
+    name: "FinalType",
+    products: [
+        // Products define the executables and libraries produced by a package, and make them visible to other packages.
+        .library(
+            name: "FinalType",
+            targets: ["FinalType"]),
+    ],
     dependencies: [
-            .package(path:"../Type"),
-            // .package(url: "https://github.com/hugobrando/ProjetAlgo", .branch("master")),
         // Dependencies declare other packages that this package depends on.
         // .package(url: /* package url */, from: "1.0.0"),
     ],
@@ -15,10 +19,10 @@ let package = Package(
         // Targets are the basic building blocks of a package. A target can define a module or a test suite.
         // Targets can depend on other targets in this package, and on products in packages which this package depends on.
         .target(
-            name: "Main",
-            dependencies: ["Type"]),
+            name: "FinalType",
+            dependencies: []),
         .testTarget(
-            name: "MainTests",
-            dependencies: ["Main"]),
+            name: "FinalTypeTests",
+            dependencies: ["FinalType"]),
     ]
 )
