@@ -2,7 +2,6 @@
 protocol Piece {
 
     associatedtype SPartie : Partie
-    associatedtype SPiece : Piece
 
  
     

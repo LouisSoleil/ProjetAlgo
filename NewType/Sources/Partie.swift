@@ -17,7 +17,7 @@ protocol AttPartie {
 
     
 }
-protocol Partie : Sequence {
+protocol Partie {
     
   
     // Crée une partie :
