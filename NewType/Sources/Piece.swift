@@ -14,7 +14,7 @@ protocol Piece {
     
     //Description : Renvoie le type d'une pièce
     //Résultat : String, nom de la pièce
-    //Post-conditions : Le résultat appartient à {Koropokkuru, Tanuki, Kitsune}
+    //Post-conditions : Le résultat appartient à {Koropokkuru, Tanuki, Kitsune, Kodama, Kodama Samurai}
     func typePiece() -> String
     
     //Description : Renvoie la position d'une pièce
@@ -31,6 +31,8 @@ protocol Piece {
     //Préconditions : positionPiece(p)!=Vide
     //Résultat : Booléen, true si le mouvement correspond à la pièce, si la position existe et est inoccupée par une pièce du même joueur(le mouvement est possible si une piece adverse occupe la case),
     //	     false sinon
+    //       Si la pièce est un Kodama, elle peut se déplacer que d'une case vers l'avant (vers la derniere ligne de son proprietaire)
+    //       Si la pièce est Un Kodama samuraï (transformé), elle peut se déplacer d'une case dans tous les sens sauf dans les diagonales arrières (vers l'opposé de la derniere ligne de son proprietaire)
     //	     Si la pièce est un Koropokkuru, elle peut se déplacer d'une case dans tous les sens
     //	     Si la pièce est un Tanuki, elle peut se déplacer d'une case en avant, en arrière, à droite ou à gauche
     //	     Si la pièce est un Kitsune, elle peut se déplacer d'une case dans une des diagonales
@@ -43,7 +45,7 @@ protocol Piece {
     //	     false sinon
     func estParachutagePossible(partie : SPartie, position : [Int]) -> Bool
     
-    //Description : Déplace une pièce vers une autre position
+    //Description : Déplace une pièce vers une autre position, si c'est le Kodama qui arrive sur la ligne adverse, il se transforme en Kodama samuraï
     //Données : nouvellePos : [Int](2)
     //Préconditions : positionPiece(p)!=Vide
     //Résultat : La même pièce avec une nouvelle position si le mouvement est possible
@@ -52,7 +54,7 @@ protocol Piece {
     // Si on capture le Koropokkuru adverse, on gagne la partie
     mutating func deplacerPiece(partie : SPartie, nouvellePos : [Int]) throws -> SPartie
     
-    //Description : Change le propriétaire d'une pièce et la place dans la réserve du nouveau propriétaire lorsque la pièce d'un joueur se pose sur la pièce d'un autre joueur
+    //Description : Change le propriétaire d'une pièce et la place dans la réserve du nouveau propriétaire lorsque la pièce d'un joueur se pose sur la pièce d'un autre joueur. Si la pièce capturée est le Kodama samuraï, il redevient un kodama non transformé. 
     //Préconditions : La position de p n'est pas Vide
     //Résultat : La même pièce, qui a un nouveau propriétaire(1 devient 2 ou 2 devient 1) et dont la position est Vide (la pièce est en réserve)
     // Lance une erreur si p est deja en réserve
@@ -72,11 +74,22 @@ protocol Piece {
     //Résultat : Booléen, true si position(p)=Vide, false sinon
     func estDansReserve() -> Bool
     
+    
+    //Description : Détermine si un Kodama a été transformé ou non,
+    //Résultat : Booléen, True si le Kodama est samuraï, False sinon
+    func estTransforme()->Bool
+    
+    //Description : Transforme un Kodama en Kodama samuraï lorsque le Kodama arrive sur la ligne correspondant  à la dernière ligne
+    // du propriétaire
+    //Préconditions : estTransforme(k)=False
+    //Résultat : Affecte True à estTransforme(k), erreur si Kodama déjà transformé
+    mutating func transformer() throws
+    
 }
 
 
 
-protocol Kodama : Piece { // Apres recherche, les override se font dans les class (implementation) et pas dans les protocols
+/*protocol Kodama : Piece { // Apres recherche, les override se font dans les class (implementation) et pas dans les protocols
 
     //override toutes les fonctions qui sont aussi dans Piece
     
@@ -127,5 +140,5 @@ protocol Kodama : Piece { // Apres recherche, les override se font dans les clas
     //Résultat : Booléen, True si le Kodama est samuraï, False sinon
     func estTransforme()->Bool 
 
-}
+}*/
 
