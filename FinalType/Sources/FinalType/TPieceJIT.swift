@@ -17,8 +17,8 @@ public struct TPieceJIT{
     
     public mutating func next()->TPiece?{
         if let courant = self.courant{
-            var t = true
-            var i = 0
+            var t : Bool = true
+            var i : Int = 0
             while t {
                 if i == 7{
                     self.courant = nil
