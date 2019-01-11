@@ -97,6 +97,7 @@ while !(p.partieFini()) {
                 // on parcourt les pieces de la reserve de JActif
                 var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
                 while let piece = it.next(){
+                    repV = false
                     while !repV{
                         if let pos = piece.positionPiece(){
                             // Choix de la piece ou pas
@@ -127,6 +128,9 @@ while !(p.partieFini()) {
                                             print("Il fallait ecrire un entier!")
                                         }
                                     }
+                                }
+                                else {
+                                    repV = true 
                                 }
                             }
                         }

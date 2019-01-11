@@ -43,11 +43,11 @@ public struct TPartie : Partie, AttPartie {
         catch {
         }
         do{
-            try! self.ku1 = TPiece(position : [0,1], nom : "Kuropokkuru")}
+            try! self.ku1 = TPiece(position : [0,1], nom : "Koropokkuru")}
         catch {
         }
         do{
-            try! self.ku2 = TPiece(position : [3,1], nom : "Kuropokkuru")}
+            try! self.ku2 = TPiece(position : [3,1], nom : "Koropokkuru")}
         catch {
         }
         self.joueurA = 1 //Int(arc4random_uniform(UInt32(2)))+
@@ -125,69 +125,47 @@ public struct TPartie : Partie, AttPartie {
     }
     
     public func pieceAPosition(pos : [Int]) -> TPiece?{
-        if let position = ko1.positionPiece(){
+        if let position = self.ko1.positionPiece(){
             if self.ko1.positionPiece()! == pos {
                 return self.ko1
             }
-            else {
-                return nil
-            }
         }
-        else if let position = ko2.positionPiece(){
+        if let position = self.ko2.positionPiece(){
             if self.ko2.positionPiece()! == pos {
                 return self.ko2
             }
-             else {
-                return nil
-            }
-        }
-        else if let position = ki1.positionPiece(){
+         }
+        if let position = self.ki1.positionPiece(){
             if self.ki1.positionPiece()! == pos{
                 return self.ki1
             }
-             else {
-                return nil
-            }
-        }
-        else if let position = ki2.positionPiece(){
+         }
+        if let position = self.ki2.positionPiece(){
             if self.ki2.positionPiece()! == pos{
                 return self.ki2
             }
-             else {
-                return nil
-            }
-        }
-        else if let position = ta1.positionPiece(){
+         }
+        if let position = self.ta1.positionPiece(){
             if self.ta1.positionPiece()! == pos{
                 return self.ta1
-            } else {
-                return nil
-            }
+            } 
         }
-        else if let position = ta2.positionPiece(){
+        if let position = self.ta2.positionPiece(){
             if self.ta2.positionPiece()! == pos{
                 return self.ta2
-            } else {
-                return nil
-            }
+            } 
         }
-        else if let position = ku1.positionPiece(){
+        if let position = self.ku1.positionPiece(){
             if self.ku1.positionPiece()! == pos{
                 return self.ku1
-            } else {
-                return nil
-            }
+            } 
         }
-        else if let position = ku2.positionPiece(){
+        if let position = self.ku2.positionPiece(){
             if self.ku2.positionPiece()! == pos{
                 return self.ku2
-            } else {
-                return nil
-            }
+            } 
         }
-        else {
-            return nil
-        }
+        return nil
     }
     
     func Est_libre(pos : [Int]) -> Bool{
