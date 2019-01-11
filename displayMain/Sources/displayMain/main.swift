@@ -97,44 +97,52 @@ while !(p.partieFini()) {
                 // on parcourt les pieces de la reserve de JActif
                 var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
                 while let piece = it.next(){
-                    repV = false
-                    while !repV{
-                        if let pos = piece.positionPiece(){
-                            // Choix de la piece ou pas
-                            print("Deplacer le \(piece.typePiece()) placee a \(pos) ? y/n")
-                            if let entree = readLine(){
-                                if entree == "y"{// s'il choisi cette piece
-                                    print("Choisis la ligne d'arrivee du deplacement")
-                                    if let entree = readLine(){
-                                        if let posLigne = Int(entree){
-                                            print("Choisis la colonne d'arrivee du deplacement")
-                                            if let entree = readLine(){
-                                                if let posCol = Int(entree){
-                                                    if piece.estPossibleMouvement(partie : p, position : [posLigne,posCol]){
-                                                        pChoisie = piece
-                                                        posChoisie = [posLigne, posCol]
-                                                        repV = true
+                    if repV{
+                        while let piece = it.next(){}
+                    }
+                    else{
+                        var yorn : Bool = false
+                        while !yorn{
+                            if let pos = piece.positionPiece(){
+                                // Choix de la piece ou pas
+                                print("Deplacer le \(piece.typePiece()) placee a \(pos) ? y/n")
+                                if let entree = readLine(){
+                                    if entree == "y"{// s'il choisi cette piece
+                                        print("Choisis la ligne d'arrivee du deplacement")
+                                        if let entree = readLine(){
+                                            if let posLigne = Int(entree){
+                                                print("Choisis la colonne d'arrivee du deplacement")
+                                                if let entree = readLine(){
+                                                    if let posCol = Int(entree){
+                                                        if piece.estPossibleMouvement(partie : p, position : [posLigne,posCol]){
+                                                            pChoisie = piece
+                                                            posChoisie = [posLigne, posCol]
+                                                            yorn = true
+                                                            repV = true
+                                                            while let piece = it.next(){}
+                                                        }
+                                                        else {
+                                                            print("Il n'est pas possible de deplacer cette piece a cet endroit")
+                                                        }
                                                     }
-                                                    else {
-                                                        print("Il n'est pas possible de deplacer cette piece a cet endroit")
+                                                    else{
+                                                        print("Il fallait ecrire un entier!")
                                                     }
-                                                }
-                                                else{
-                                                    print("Il fallait ecrire un entier!")
                                                 }
                                             }
-                                        }
-                                        else{
-                                            print("Il fallait ecrire un entier!")
+                                            else{
+                                                print("Il fallait ecrire un entier!")
+                                            }
                                         }
                                     }
-                                }
-                                else {
-                                    repV = true 
+                                    else {
+                                        yorn = true 
+                                    }
                                 }
                             }
                         }
                     }
+                
                 }
             } else {
                 print("ecrit p pour parachuter ou d pour deplacer une piece du plateau")
