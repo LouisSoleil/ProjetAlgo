@@ -31,7 +31,7 @@ public struct TPiece : Piece{
         }
     }
     
-    public func typePiece() -> String{
+    public func typePiece()->String{
         return self.nom
     }
     

@@ -3,7 +3,7 @@ import FinalType
 func testInit() throws{
 	var p : TPartie = TPartie()
     //demarrerPartie() fait appel au init() de Piece
-    if let piece = p.pieceAPosition(pos : [0,1])!{
+    if let piece : TPiece? = p.pieceAPosition(pos : [0,1])!{
 		print("Koropokkuru créé en position [0,1]")
 	}
 	else{
@@ -28,8 +28,8 @@ func testInit() throws{
 func testTypePiece(){
     var p : TPartie = TPartie()
     var pi : TPiece = p.pieceAPosition(pos : [0,1])!
-	if let str=pi.typePiece(){
-		print("pi est de type" + str)
+	if let str : String?=pi.typePiece(){
+		print("pi est de type \(str)")
 	}
 	else{
 		print("Problème")
@@ -41,7 +41,7 @@ func testPositionPiece(){
     var pi1 : TPiece = p.pieceAPosition(pos : [0,1])!
     var pi2 : TPiece = p.pieceAPosition(pos : [2,0])!
     if let piece1 = pi1.positionPiece(){
-        print(pi1+"est en position"+piece1)
+        print("\(pi1.typePiece) est en position \(piece1)")
     }
     else{
         print("Problème : pièce non trouvée")
@@ -60,14 +60,14 @@ func testProprietairePiece(){
     //pi1 est le Koropokkuru du joueur 1
     var pi2 : TPiece = p.pieceAPosition(pos : [3,1])!
     //pi2 est le Koroppokuru du joueur 2
-    if let piece1=pi1.proprietairePiece(){
-        print("la pièce"+pi1+"appartient au joueur"+piece1)
+    if let piece1 : Int?=pi1.proprietairePiece(){
+        print("la pièce \(pi1.typePiece) appartient au joueur \(piece1)")
     }
     else{
         print("Problème")
     }
-    if let piece2=pi2.proprietairePiece(){
-        print("la pièce"+pi2+"appartient au joueur"+piece2)
+    if let piece2 : Int?=pi2.proprietairePiece(){
+        print("la pièce \(pi2.typePiece) appartient au joueur \(piece2)")
     }
     else{
         print("Problème")
@@ -108,7 +108,7 @@ func testEstPossibleMouvement(){
 func testDeplacerPiece()throws{
     var p : TPartie = TPartie()
     var pi1 : TPiece = p.pieceAPosition(pos : [0,1])!
-    if let p2=pi1.deplacerPiece(partie : p, nouvellePos : [1,0]){
+    if var p2 : TPartie?=try pi1.deplacerPiece(partie : p, nouvellePos : [1,0]){
         print("la pièce a été déplacée")
     }
     else{
