@@ -168,7 +168,7 @@ public struct TPartie : Partie, AttPartie {
         return nil
     }
     
-    func Est_libre(pos : [Int]) -> Bool{
+    public func Est_libre(pos : [Int]) -> Bool{
         return self.pieceAPosition(pos : pos) == nil
     }
     
