@@ -66,13 +66,13 @@ func testPieceAPositionEtEstLibre(){
 
     var p : TPartie = TPartie()
     
-    if let piece = p.pieceAPosition(pos : [0,1])!{
+    if let piece = p.pieceAPosition(pos : [0,1]){
         print("Pas de souci : la piece \(piece.typePiece()) de Joueur \(piece.proprietairePiece()) est placée en [0,1]")
     } else {
         print("PROBLEME : il y a une piece a cette position")
     }
     
-    if p.estlibre([1,0]){
+    if p.Est_libre(pos : [1,0]){
         print("Pas de souci : La case [1,0] est bien libre")
     } else{
     
