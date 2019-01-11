@@ -31,7 +31,7 @@ public struct TPiece : Piece{
         }
     }
     
-    public func typePiece()->String{
+    public func typePiece() -> String{
         return self.nom
     }
     
@@ -179,7 +179,7 @@ public struct TPiece : Piece{
         }
     }
     
-    func estTransforme()->Bool {
+    public func estTransforme()->Bool {
         return self.trans
     }
     

@@ -3,7 +3,7 @@ import FinalType
 func testCreerPieceK(){
     var p : TPartie = TPartie()
     //demarrerPartie() fait appel au init() de Kodama
-    if let kodama = p.pieceAPosition(pos : [1,1])!{
+    if let kodama : TPiece? = p.pieceAPosition(pos : [1,1])!{
         print("Kodama créé en position [0,1], non transformé")
     }
     else{
@@ -16,13 +16,15 @@ func testCreerPieceK(){
     catch{
         print("position non-valide")
     }
-    do{
+    /*do{ 
         try TPiece(position : [0,1], nom : "Kodama")
         print("Problème")
     }
     catch{
         print("position déjà occupée")
     }
+    le Kodama ne sera jamais initialisé a cette endroit dans TPartie
+    */
 }
 
 
@@ -59,7 +61,7 @@ func testEstPossibleMouvementK(){
 func testDeplacerPieceK(){
     var p : TPartie = TPartie()
     var k1 : TPiece = p.pieceAPosition(pos : [1,1])!
-    if let p2=k1.deplacerPiece(partie : p, nouvellePos : [2,1]){
+    if let p2 : TPartie? = try! k1.deplacerPiece(partie : p, nouvellePos : [2,1]){
         print("Le kodama a été déplacée")
     }
     else{
@@ -85,7 +87,7 @@ func testDeplacerPieceK(){
 func testEstTransformeK(){
     var p : TPartie = TPartie()
     var k1 : TPiece = p.pieceAPosition(pos : [1,1])!
-    if k1.estTransofrme{
+    if k1.estTransforme(){
         print("Problème : le Kodama ne devrait pas être samuraï)")
     }
     else{
@@ -93,4 +95,7 @@ func testEstTransformeK(){
     }
 }
 
+
+//testCreerPieceK()
+// testEstPossibleMouvementK()
 

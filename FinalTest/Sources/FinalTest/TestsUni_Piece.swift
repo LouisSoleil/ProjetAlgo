@@ -16,13 +16,15 @@ func testInit() throws{
 	catch{
 	print("position non-valide")
 	}
-	do{
+	/*do{
         try TPiece(position : [0,1], nom : "Tanuki")
 		print("Problème")
 	}
 	catch{
 	print("position déjà occupée")
 	}
+    on ne le test pas car fait a la création(changement de spécif) Problème que le type se refère tout seul
+    */
 }
 
 func testTypePiece(){
@@ -105,7 +107,7 @@ func testEstPossibleMouvement(){
 
 }
 
-func testDeplacerPiece()throws{
+func testDeplacerPiece() throws{
     var p : TPartie = TPartie()
     var pi1 : TPiece = p.pieceAPosition(pos : [0,1])!
     if var p2 : TPartie?=try pi1.deplacerPiece(partie : p, nouvellePos : [1,0]){

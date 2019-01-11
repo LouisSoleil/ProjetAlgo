@@ -2,9 +2,9 @@ public struct TPartie : Partie, AttPartie {
     typealias SPiece = TPiece
     typealias SItTotalPieceIT = ItTotalPieceIT
     typealias SPieceJIT = TPieceJIT
-    
-    
-    
+
+
+
     internal var ko1 : TPiece
     internal var ko2 : TPiece
     internal var ki1 : TPiece
@@ -14,9 +14,10 @@ public struct TPartie : Partie, AttPartie {
     internal var ku1 : TPiece
     internal var ku2 : TPiece
     internal var joueurA : Int
+    internal var Fini : Bool = false
     public var tableau : [TPiece]
-    
-    
+
+
     public init() {
         do{
             try! self.ko1 = TPiece(position : [1,1], nom : "Kodama")}
@@ -50,11 +51,13 @@ public struct TPartie : Partie, AttPartie {
             try! self.ku2 = TPiece(position : [3,1], nom : "Koropokkuru")}
         catch {
         }
-        self.joueurA = 1 //Int(arc4random_uniform(UInt32(2)))+
+        self.joueurA = Int.random(in: 0 ..< 2) + 1
         self.tableau = [self.ko1,self.ko2,self.ki1,self.ki2,self.ta1,self.ta2,self.ku1,self.ku2]
     }
-    
+
     public func partieFini() -> Bool {
+        return self.Fini
+        /*
         var fin : Bool = false
         if self.ku1.proprietairePiece() == 2 || self.ku2.proprietairePiece() == 1 {
             return !fin
@@ -104,8 +107,9 @@ public struct TPartie : Partie, AttPartie {
         else {
             return fin
         }
+        */
     }
-    
+
     public func joueurActif() -> Int{
         if self.joueurA == 1 {
             return 1
@@ -114,7 +118,7 @@ public struct TPartie : Partie, AttPartie {
             return 2
         }
     }
-    
+
     public mutating func changerTour() {
         if self.joueurActif()==1{
             self.joueurA = 2
@@ -123,7 +127,7 @@ public struct TPartie : Partie, AttPartie {
             self.joueurA = 1
         }
     }
-    
+
     public func pieceAPosition(pos : [Int]) -> TPiece?{
         if let position = self.ko1.positionPiece(){
             if self.ko1.positionPiece()! == pos {
@@ -148,38 +152,38 @@ public struct TPartie : Partie, AttPartie {
         if let position = self.ta1.positionPiece(){
             if self.ta1.positionPiece()! == pos{
                 return self.ta1
-            } 
+            }
         }
         if let position = self.ta2.positionPiece(){
             if self.ta2.positionPiece()! == pos{
                 return self.ta2
-            } 
+            }
         }
         if let position = self.ku1.positionPiece(){
             if self.ku1.positionPiece()! == pos{
                 return self.ku1
-            } 
+            }
         }
         if let position = self.ku2.positionPiece(){
             if self.ku2.positionPiece()! == pos{
                 return self.ku2
-            } 
+            }
         }
         return nil
     }
-    
+
     public func Est_libre(pos : [Int]) -> Bool{
         return self.pieceAPosition(pos : pos) == nil
     }
-    
+
     public func pieceJIT(joueur : Int) -> TPieceJIT{
         return TPieceJIT(joueur : joueur, partie : self)
     }
-    
+
     public func makeIT() -> ItTotalPieceIT{
         return ItTotalPieceIT (partie : self)
     }
-    
+
     public func derniereLigne(joueur : Int) -> Int{
         if joueur == 1 {
             return 3
@@ -188,15 +192,14 @@ public struct TPartie : Partie, AttPartie {
             return 0
         }
     }
-    
+
     public mutating func gagner(joueur :Int){
-        if joueur == 2 {
-            print("le joueur 2 a gagné")
-            self.partieFini()
+        self.Fini = true
+        /*if joueur == 2 {
+            self.Fini = true
         }
         else{
-            print("le joueur 1 a gagné")
-            self.partieFini()
-        }
+            self.Fini = true
+        }*/
     }
 }
