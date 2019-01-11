@@ -99,7 +99,58 @@ public struct TPiece : Piece{
             }
         }
         else{
-            return false
+            if (self.pos != nil) && (-1 < position[0]) && (position[0] < 4) && (-1 < position[1]) && (position[1] < 3){
+                if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
+                    return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1])
+                }
+                else if self.nom == "Tanuki"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
+                    return (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
+                }
+                else if self.nom == "Kodama"{
+                    if self.estTransforme(){
+                        if self.proprietairePiece() == 1 {
+                            if (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        }
+                        else{
+                            if (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
+                                return true
+                            }
+                            else{
+                                return false
+                            }
+                        }
+                    }
+                    else { // Kodama samuraï
+                        if self.proprietairePiece() == 1 {
+                            if self.pos![0]+1 == position[0] && self.pos![1] == position[1] {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        }
+                        else{
+                            if self.pos![0]-1 == position[0] && self.pos![1] == position[1] {
+                                return true
+                            }
+                            else {
+                                return false
+                            }
+                        }
+                    }
+                }
+                else { // c'est un Koropokkuru
+                    return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
+                }
+            }
+            else{
+                return false
+            }
         }
     }
     

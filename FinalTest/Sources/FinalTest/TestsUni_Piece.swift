@@ -40,20 +40,22 @@ func testTypePiece(){
 
 func testPositionPiece(){
     var p : TPartie = TPartie()
-    var pi1 : TPiece = p.pieceAPosition(pos : [0,1])!
-    var pi2 : TPiece = p.pieceAPosition(pos : [2,0])!
-    if let piece1 = pi1.positionPiece(){
-        print("\(pi1.typePiece) est en position \(piece1)")
+    var pi1 : TPiece? = p.pieceAPosition(pos : [0,1])
+    var pi2 : TPiece? = p.pieceAPosition(pos : [2,0])
+    if let piece1 = pi1!.positionPiece(){
+        print("\(pi1!.typePiece()) est en position \(piece1)")
     }
     else{
         print("Problème : pièce non trouvée")
     }
-    if let piece2 = pi2.positionPiece(){
+    /*if let piece2 = pi2.positionPiece(){
         print("Erreur : il ne devrait pas y avoir de pièce à cette position")
     }
     else{
         print("Il n'y a pas de pièce à cette position")
     }
+    On ne peut pas appeler .positionPiece d'un "nil"
+    */
 }
 
 func testProprietairePiece(){
@@ -130,8 +132,10 @@ func testDeplacerPiece() throws{
     catch{
         print("position inexistante")
     }
+    var par : TPartie = TPartie()
+    var pie1 : TPiece = par.pieceAPosition(pos : [0,1])!
     do{
-        try pi1.deplacerPiece(partie : p, nouvellePos : [2,0])
+        try pie1.deplacerPiece(partie : par, nouvellePos : [2,0])
         print("Problème : Le mouvement ne correspond pas à la pièce")
     }
     catch{

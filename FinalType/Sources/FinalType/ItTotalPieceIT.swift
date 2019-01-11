@@ -20,7 +20,7 @@ public struct ItTotalPieceIT {
                     t = false
                 }
                 else if self.courant!.nom == self.pieces[i].nom && self.courant!.joueur == self.pieces[i].joueur {//test si c'est la même pièce
-                    self.courant = self.pieces[i+1]
+                    self.courant = self.pieces[i]
                     t = false
                 }
                 else {

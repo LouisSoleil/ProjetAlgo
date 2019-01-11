@@ -19,8 +19,9 @@ public struct TPieceJIT{
         if let courant = self.courant{
             var t : Bool = true
             var i : Int = 0
+            var piece : TPiece = self.courant!
             while t {
-                if i == 7{
+                if i == 3{
                     self.courant = nil
                     t = false
                 }
@@ -32,7 +33,10 @@ public struct TPieceJIT{
                     i += 1
                 }
             }
+            return piece
         }
-        return self.courant
+        else{
+            return nil
+        }
     }
 }
