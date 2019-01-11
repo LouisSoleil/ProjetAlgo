@@ -15,7 +15,7 @@ public struct TPiece : Piece{
     }
     
     
-    init(position : [Int], nom : String) throws {
+    public init(position : [Int], nom : String) throws {
         guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 else{
             throw Erreur.mauvaisparametre
         }
