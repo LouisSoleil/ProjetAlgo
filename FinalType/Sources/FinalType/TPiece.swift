@@ -179,7 +179,7 @@ public struct TPiece : Piece{
         }
     }
     
-    func estTransforme()->Bool {
+    public func estTransforme()->Bool {
         return self.trans
     }
     
