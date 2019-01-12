@@ -44,7 +44,7 @@ public struct TPiece : Piece{
     }
     
     public func estPossibleMouvement(partie : TPartie, position : [Int]) -> Bool{
-        if let positionPiece = partie.pieceAPosition(pos : position) {
+        if var positionPiece = partie.pieceAPosition(pos : position) {
             if (self.pos != nil) && (-1 < position[0]) && (position[0] < 4) && (-1 < position[1]) && (position[1] < 3) && (partie.pieceAPosition(pos : position)!.proprietairePiece() != self.proprietairePiece()){
                 if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
                     return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1])
@@ -168,7 +168,7 @@ public struct TPiece : Piece{
         }
     }
     
-    public mutating func deplacerPiece(partie : TPartie, nouvellePos : [Int]) throws -> TPartie {
+    public mutating func deplacerPiece(partie : inout TPartie, nouvellePos : [Int]) throws -> TPartie {
         guard self.pos != nil && self.estPossibleMouvement(partie : partie, position : nouvellePos) else{
             throw Erreur.mauvaisparametre
         }
@@ -177,6 +177,9 @@ public struct TPiece : Piece{
         }
         else{
             var piece = partie.pieceAPosition(pos : nouvellePos)!
+            if piece.nom == "Koropokkuru"{ // on fait gagner la partie au joueur actif
+                partie.gagner(joueur : partie.joueurActif())
+            }
             do{
                 try piece.etreCapturee()}
             catch {

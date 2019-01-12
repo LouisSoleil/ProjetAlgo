@@ -202,4 +202,6 @@ public struct TPartie : Partie, AttPartie {
             self.Fini = true
         }*/
     }
+
+    
 }

@@ -6,7 +6,7 @@ protocol AttPartie {
     // Renvoie la piece a cette position s'il y en a une, Vide sinon
     // pre : Il s'agit d'une position : pos[0] est la ligne, entre 0 et 3, pos[1] est la colonne, entre 0 et 2, il n'y a que 2 arguments (ligne et colonne)
     // post : La piece est la piece a la position entrée
-    func pieceAPosition(pos : [Int]) -> SPiece?
+    func pieceAPosition(pos : [Int]) -> SPiece? 
     // Iterateur : Renvoie le type Iterateur avec toutes les pieces de la partie dedans, pour un for i in Partie
     func makeIT()->SItTotalPieceIT
     
@@ -40,7 +40,7 @@ protocol Partie {
         
     // Indique s'il y a une piece a cette position
     // pre : Il s'agit d'une position : pos[0] est la ligne, entre 0 et 3, pos[1] est la colonne, entre 0 et 2, il n'y a que 2 arguments (ligne et colonne)
-    func Est_libre(pos : [Int])-> Bool
+    func Est_libre(pos : [Int])-> Bool 
     
     
     // Renvoie la ligne considérée comme la derniere ligne du joueur en entrée

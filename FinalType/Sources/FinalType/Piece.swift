@@ -36,14 +36,14 @@ protocol Piece {
     //	     Si la pièce est un Koropokkuru, elle peut se déplacer d'une case dans tous les sens
     //	     Si la pièce est un Tanuki, elle peut se déplacer d'une case en avant, en arrière, à droite ou à gauche
     //	     Si la pièce est un Kitsune, elle peut se déplacer d'une case dans une des diagonales
-    func estPossibleMouvement(partie : SPartie, position : [Int]) -> Bool
+    func estPossibleMouvement(partie : SPartie, position : [Int]) -> Bool 
     
     //Description : Détermine si le parachutage d'une pièce vers une position est possible
     //Données :  partie : Partie, position : [Int](2) correspondant à la position vers laquelle la pièce doit être déplacée (la nouvelle position)
     //Préconditions : positionPiece(p)==Vide
     //Résultat : Booléen, true si le mouvement correspond à la pièce, si la position existe et est inoccupée
     //	     false sinon
-    func estParachutagePossible(partie : SPartie, position : [Int]) -> Bool
+    func estParachutagePossible(partie : SPartie, position : [Int]) -> Bool 
     
     //Description : Déplace une pièce vers une autre position, si c'est le Kodama qui arrive sur la ligne adverse, il se transforme en Kodama samuraï
     //Données : nouvellePos : [Int](2)
@@ -52,7 +52,7 @@ protocol Piece {
     // Lance une erreur si le mouvement n'est pas possible 
     // Si la piece arrive sur une piece adverse (c'est pour ça qu'on a besoin de la partie), on capture la piece adverse (la partie renvoyée est la partie aprés le deplacement)
     // Si on capture le Koropokkuru adverse, on gagne la partie
-    mutating func deplacerPiece(partie : SPartie, nouvellePos : [Int]) throws -> SPartie
+    mutating func deplacerPiece(partie : inout SPartie, nouvellePos : [Int]) throws -> SPartie // RAJOUTE inout pour pouvoir faire gagner la partie a un joueur
     
     //Description : Change le propriétaire d'une pièce et la place dans la réserve du nouveau propriétaire lorsque la pièce d'un joueur se pose sur la pièce d'un autre joueur. Si la pièce capturée est le Kodama samuraï, il redevient un kodama non transformé. 
     //Préconditions : La position de p n'est pas Vide
@@ -67,7 +67,7 @@ protocol Piece {
     // Résultat : La même pièce qui a désormais une position sur le plateau
     // Lance une erreur si la pièce n'est pas en réserve ou si la position est déjà occupée
     // Post-conditions : positionPiece(p)!=Vide
-    mutating func parachuter(partie : SPartie, position : [Int]) throws -> SPartie
+    mutating func parachuter(partie : SPartie, position : [Int]) throws -> SPartie 
     
     
     //Description : Détermine si une pièce est dans la réserve

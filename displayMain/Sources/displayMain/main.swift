@@ -4,7 +4,6 @@ import FinalType
 // Programme principal
 var p : TPartie = TPartie()// init : Demarrer la partie
 
-
 while !(p.partieFini()) {
     // affiche l'etat du jeu
     print("tour du joueur \(p.joueurActif())")
@@ -96,13 +95,13 @@ while !(p.partieFini()) {
 
                 // on parcourt les pieces de la reserve de JActif
                 var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
-                while let piece = it.next(){
-                    if repV{
+                while let piece = it.next(){ // RAJOUTE : si on a rien deplacé on redemande au joueur ce qu'il veut faire
+                    if repV{ // RAJOUTE : si on a deja deplacé une piece on ne doit plus pouvoir déplacer les autres
                         while let piece = it.next(){}
                     }
                     else{
                         var yorn : Bool = false
-                        while !yorn{
+                        while !yorn{ 
                             if let pos = piece.positionPiece(){
                                 // Choix de la piece ou pas
                                 print("Deplacer le \(piece.typePiece()) placee a \(pos) ? y/n")
@@ -159,7 +158,7 @@ while !(p.partieFini()) {
 
             if !pChoisie.estDansReserve(){// si c'est un deplacement
                 do {
-                    try p = pChoisie.deplacerPiece(partie : p, nouvellePos : posChoisie)}// on considere la capture comme un deplacement (on peut gagner la partie ici)
+                    try p = pChoisie.deplacerPiece(partie : &p, nouvellePos : posChoisie)}// on considere la capture comme un deplacement (on peut gagner la partie ici)
                 catch {
                 }
             }else{// si c'est un parachutage
