@@ -3,6 +3,7 @@ import FinalType
 
 // Programme principal
 var p : TPartie = TPartie()// init : Demarrer la partie
+var re : ItTotalPieceIT
 
 while !(p.partieFini()) {
     // affiche l'etat du jeu
@@ -23,7 +24,7 @@ while !(p.partieFini()) {
     }
 
     var str2 : String = ""
-    for piece in p.tableau{ // utilise iterateur normal sur toutes les pieces
+    for piece in re.pieces{ // utilise iterateur normal sur toutes les pieces
         if piece.estDansReserve(){
             if piece.proprietairePiece()==1{
                 str+=piece.typePiece()
@@ -32,8 +33,7 @@ while !(p.partieFini()) {
             }
         }
     }
-            print("OK")
-    print("Reserve J1 \n"+str+"\n Reserve J2 \n"+str2)
+    print("Reserve J1 \n"+str+"\nReserve J2 \n"+str2)
 
     // Choix de l'action du joueur
 
@@ -107,7 +107,7 @@ while !(p.partieFini()) {
                     }
                     else{
                         var yorn : Bool = false
-                        while !yorn{ 
+                        while !yorn{
                             if let pos = piece.positionPiece(){
                                 // Choix de la piece ou pas
                                 print("Deplacer le \(piece.typePiece()) placee a \(pos) ? y/n")
@@ -143,13 +143,13 @@ while !(p.partieFini()) {
                                         }
                                     }
                                     else {
-                                        yorn = true 
+                                        yorn = true
                                     }
                                 }
                             }
                         }
                     }
-                
+
                 }
             } else {
                 print("ecrit p pour parachuter ou d pour deplacer une piece du plateau")
