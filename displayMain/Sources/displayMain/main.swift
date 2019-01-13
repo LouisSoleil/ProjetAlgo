@@ -3,7 +3,6 @@ import FinalType
 
 // Programme principal
 var p : TPartie = TPartie()// init : Demarrer la partie
-var re : ItTotalPieceIT
 
 while !(p.partieFini()) {
     // affiche l'etat du jeu
@@ -24,7 +23,8 @@ while !(p.partieFini()) {
     }
 
     var str2 : String = ""
-    for piece in re.pieces{ // utilise iterateur normal sur toutes les pieces
+    var iterateur : ItTotalPieceIT = p.makeIT()
+    while let piece=iterateur.next(){ // utilise iterateur normal sur toutes les pieces
         if piece.estDansReserve(){
             if piece.proprietairePiece()==1{
                 str+=piece.typePiece()
@@ -33,7 +33,7 @@ while !(p.partieFini()) {
             }
         }
     }
-    print("Reserve J1 \n"+str+"\nReserve J2 \n"+str2)
+    print("Reserve J1 \n"+str+""+"\nReserve J2 \n"+str2+"")
 
     // Choix de l'action du joueur
 
@@ -41,6 +41,7 @@ while !(p.partieFini()) {
     var pChoisie : TPiece?
     var posChoisie : [Int]?
     var anciennepos : [Int] = []
+    var nomP : String = ""
 
 
 
@@ -75,6 +76,7 @@ while !(p.partieFini()) {
                                                         pChoisie = piece
                                                         posChoisie = [posLigne, posCol]
                                                         repV = true
+                                                        nomP = piece.typePiece()
                                                     }
                                                     else {
                                                         print("Il n'est pas possible de parachuter a cet endroit")
@@ -175,7 +177,7 @@ while !(p.partieFini()) {
                 catch{}
             }else{// si c'est un parachutage
                 do {
-                    try p = pChoisie.parachuter(partie : p, position : posChoisie)}
+                    try p.parachutage(nom : nomP, Nouvellepos : posChoisie)}
                 catch{
                 }
             }
@@ -187,33 +189,35 @@ while !(p.partieFini()) {
         print("Le joueur \(p.joueurActif()) gagne la partie")
 
     }
+    else{
 
 
-    p.changerTour() // change le joueur actif
+        p.changerTour() // change le joueur actif
 
 
-    //Le joueur gagne si son roi est dans la derniere ligne au debut de son tour (s'il met son roi dans la derniere ligne et ne se fais pas manger)
-    var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
-    while let piece=it.next(){
+        //Le joueur gagne si son roi est dans la derniere ligne au debut de son tour (s'il met son roi dans la derniere ligne et ne se fais pas manger)
+        var it : TPieceJIT = p.pieceJIT(joueur : p.joueurActif())
+        while let piece=it.next(){
 
-        if let pos = piece.positionPiece(){
-        print("\(piece.typePiece())")
+            if let pos = piece.positionPiece(){
 
-            if piece.typePiece() == "Koropokkuru"{
+                if piece.typePiece() == "Koropokkuru"{
 
-                if pos[0] == p.derniereLigne(joueur : p.joueurActif()){
-                    p.gagner(joueur : p.joueurActif())
+                    if pos[0] == p.derniereLigne(joueur : p.joueurActif()){
+                        p.gagner(joueur : p.joueurActif())
+                    }
                 }
             }
         }
+
+
+        if p.partieFini(){
+
+            print("Le joueur \(p.joueurActif()) gagne la partie")
+
+        }
+
+        // c'est mis a la fin du while pour ne pas refaire un tour en trop
     }
 
-
-    if p.partieFini(){
-
-        print("Le joueur \(p.joueurActif()) gagne la partie")
-
-    }
-
-    // c'est mis a la fin du while pour ne pas refaire un tour en trop
 }

@@ -14,6 +14,7 @@ public struct ItTotalPieceIT {
         if let courant = self.courant{
             var t = true
             var i = 0
+            var piece : TPiece = self.courant!
             while t {
                 if i == 7{
                     self.courant = nil
@@ -27,6 +28,7 @@ public struct ItTotalPieceIT {
                     i += 1
                 }
             }
+            return piece
         }
         return self.courant
     }

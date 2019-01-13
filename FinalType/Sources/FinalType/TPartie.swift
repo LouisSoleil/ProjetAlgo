@@ -255,14 +255,18 @@ public struct TPartie : Partie, AttPartie {
                     do{
                         try self.ku1.etreCapturee()
                     }
-                    catch{}                }
+                    catch{}                
+                    self.gagner(joueur : self.joueurActif())
+                }
             }
             if let position = self.ku2.positionPiece(){
                 if self.ku2.positionPiece()! == Nouvellepos{
                     do{
                         try self.ku2.etreCapturee()
                     }
-                    catch{}                }
+                    catch{}                
+                    self.gagner(joueur : self.joueurActif())
+                }
             }
         }
 
@@ -305,6 +309,39 @@ public struct TPartie : Partie, AttPartie {
         if let position = self.ku2.positionPiece(){
             if self.ku2.positionPiece()! == Anciennepos{
                 self.ku2.changerPosition(pos : Nouvellepos)
+            }
+        }
+    }
+
+    public mutating func parachutage(nom : String, Nouvellepos : [Int]){
+        if let position = self.ko1.positionPiece(){}else{
+            if self.ko1.typePiece() == nom {
+                self.ko1.changerPosition(pos : Nouvellepos)
+            }
+        }
+        if let position = self.ko2.positionPiece(){}else{
+            if self.ko2.typePiece() == nom {
+                self.ko2.changerPosition(pos : Nouvellepos)
+            }
+         }
+        if let position = self.ki1.positionPiece(){}else{
+            if self.ki1.typePiece() == nom{
+                self.ki1.changerPosition(pos : Nouvellepos)
+            }
+         }
+        if let position = self.ki2.positionPiece(){}else{
+            if self.ki2.typePiece() == nom{
+                self.ki2.changerPosition(pos : Nouvellepos)
+            }
+         }
+        if let position = self.ta1.positionPiece(){}else{
+            if self.ta1.typePiece() == nom{
+                self.ta1.changerPosition(pos : Nouvellepos)
+            }
+        }
+        if let position = self.ta2.positionPiece(){}else{
+            if self.ta2.typePiece() == nom{
+                self.ta2.changerPosition(pos : Nouvellepos)
             }
         }
     }
