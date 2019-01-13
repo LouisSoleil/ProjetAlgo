@@ -3,6 +3,7 @@ import FinalType
 
 // Programme principal
 var p : TPartie = TPartie()// init : Demarrer la partie
+var re : ItTotalPieceIT
 
 while !(p.partieFini()) {
     // affiche l'etat du jeu
@@ -20,7 +21,7 @@ while !(p.partieFini()) {
         str=""
     }
     var str2 : String = ""
-    for piece in p.tableau{ // utilise iterateur normal sur toutes les pieces
+    for piece in re.pieces{ // utilise iterateur normal sur toutes les pieces
         if piece.estDansReserve(){
             if piece.proprietairePiece()==1{
                 str+=piece.typePiece()
@@ -29,7 +30,7 @@ while !(p.partieFini()) {
             }
         }
     }
-    print("Reserve J1 \n"+str+"\n Reserve J2 \n"+str2)
+    print("Reserve J1 \n"+str+"\nReserve J2 \n"+str2)
 
     // Choix de l'action du joueur
 
