@@ -6,7 +6,7 @@ public struct TPiece : Piece{
     internal var pos : [Int]?
     internal var nom : String
     internal var joueur : Int
-    internal var trans : Bool = false
+    internal var trans : Bool
 
     
     
@@ -29,6 +29,7 @@ public struct TPiece : Piece{
         else {
             self.joueur = 2
         }
+        self.trans = false
     }
     
     public func typePiece() -> String{
@@ -239,6 +240,10 @@ public struct TPiece : Piece{
     
     public func estDansReserve() -> Bool {
         return self.pos == nil
+    }
+
+    public mutating func changerPosition(pos : [Int]){
+        self.pos = pos
     }
 }
 

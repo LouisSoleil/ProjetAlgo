@@ -203,5 +203,108 @@ public struct TPartie : Partie, AttPartie {
         }*/
     }
 
-    
+    public mutating func deplacement(Anciennepos : [Int], Nouvellepos : [Int]){
+        // CAPTURE 
+        if self.pieceAPosition(pos : Nouvellepos) != nil{
+            if let position = self.ko1.positionPiece(){
+                if self.ko1.positionPiece()! == Nouvellepos {
+                    do{
+                        try self.ko1.etreCapturee()
+                    }
+                    catch{}
+                }
+            }
+            if let position = self.ko2.positionPiece(){
+                if self.ko2.positionPiece()! == Nouvellepos {
+                    do{
+                        try self.ko2.etreCapturee()
+                    }
+                    catch{}                }
+             }
+            if let position = self.ki1.positionPiece(){
+                if self.ki1.positionPiece()! == Nouvellepos{
+                    do{
+                        try self.ki1.etreCapturee()
+                    }
+                    catch{}                }
+             }
+            if let position = self.ki2.positionPiece(){
+                if self.ki2.positionPiece()! == Nouvellepos{
+                    do{
+                        try self.ki2.etreCapturee()
+                    }
+                    catch{}                }
+             }
+            if let position = self.ta1.positionPiece(){
+                if self.ta1.positionPiece()! == Nouvellepos{
+                    do{
+                        try self.ta1.etreCapturee()
+                    }
+                    catch{}                }
+            }
+            if let position = self.ta2.positionPiece(){
+                if self.ta2.positionPiece()! == Nouvellepos{
+                    do{
+                        try self.ta2.etreCapturee()
+                    }
+                    catch{}                }
+            }
+            if let position = self.ku1.positionPiece(){
+                if self.ku1.positionPiece()! == Nouvellepos{
+                    do{
+                        try self.ku1.etreCapturee()
+                    }
+                    catch{}                }
+            }
+            if let position = self.ku2.positionPiece(){
+                if self.ku2.positionPiece()! == Nouvellepos{
+                    do{
+                        try self.ku2.etreCapturee()
+                    }
+                    catch{}                }
+            }
+        }
+
+        // DEPLACEMENT
+        if let position = self.ko1.positionPiece(){
+            if self.ko1.positionPiece()! == Anciennepos {
+                self.ko1.changerPosition(pos : Nouvellepos)
+            }
+        }
+        if let position = self.ko2.positionPiece(){
+            if self.ko2.positionPiece()! == Anciennepos {
+                self.ko2.changerPosition(pos : Nouvellepos)
+            }
+         }
+        if let position = self.ki1.positionPiece(){
+            if self.ki1.positionPiece()! == Anciennepos{
+                self.ki1.changerPosition(pos : Nouvellepos)
+            }
+         }
+        if let position = self.ki2.positionPiece(){
+            if self.ki2.positionPiece()! == Anciennepos{
+                self.ki2.changerPosition(pos : Nouvellepos)
+            }
+         }
+        if let position = self.ta1.positionPiece(){
+            if self.ta1.positionPiece()! == Anciennepos{
+                self.ta1.changerPosition(pos : Nouvellepos)
+            }
+        }
+        if let position = self.ta2.positionPiece(){
+            if self.ta2.positionPiece()! == Anciennepos{
+                self.ta2.changerPosition(pos : Nouvellepos)
+            }
+        }
+        if let position = self.ku1.positionPiece(){
+            if self.ku1.positionPiece()! == Anciennepos{
+                self.ku1.changerPosition(pos : Nouvellepos)
+            }
+        }
+        if let position = self.ku2.positionPiece(){
+            if self.ku2.positionPiece()! == Anciennepos{
+                self.ku2.changerPosition(pos : Nouvellepos)
+            }
+        }
+    }
 }

@@ -36,6 +36,7 @@ while !(p.partieFini()) {
     var repV : Bool  = false
     var pChoisie : TPiece?
     var posChoisie : [Int]?
+    var anciennepos : [Int] = []
 
 
     while !repV {
@@ -116,6 +117,9 @@ while !(p.partieFini()) {
                                                         if piece.estPossibleMouvement(partie : p, position : [posLigne,posCol]){
                                                             pChoisie = piece
                                                             posChoisie = [posLigne, posCol]
+                                                            anciennepos = piece.positionPiece()!
+                                                            print("\(posChoisie)")
+                                                            print("\(anciennepos)")
                                                             yorn = true
                                                             repV = true
                                                             while let piece = it.next(){}
@@ -157,10 +161,11 @@ while !(p.partieFini()) {
         if let posChoisie = posChoisie{
 
             if !pChoisie.estDansReserve(){// si c'est un deplacement
-                do {
+                /*do {
                     try p = pChoisie.deplacerPiece(partie : &p, nouvellePos : posChoisie)}// on considere la capture comme un deplacement (on peut gagner la partie ici)
                 catch {
-                }
+                }*/
+                p.deplacement(Anciennepos : anciennepos, Nouvellepos : posChoisie)
             }else{// si c'est un parachutage
                 do {
                     try p = pChoisie.parachuter(partie : p, position : posChoisie)}
