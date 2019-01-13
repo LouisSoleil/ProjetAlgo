@@ -19,7 +19,7 @@ public struct TPiece : Piece{
         guard position.count == 2 && -1 < position[0] && position[0] < 4 && -1 < position[1] && position[1] < 3 else{
             throw Erreur.mauvaisparametre
         }
-        guard nom == "Koropokkuru" || nom == "Tanuki" || nom == "Kitsune" || nom == "Kodama" else {throw Erreur.mauvaisparametre}
+        guard nom == "Koropokkuru" || nom == "Tanuki1" || nom == "Kitsune1" || nom == "Kodama1" || nom == "Tanuki2" || nom == "Kitsune2" || nom == "Kodama2"else {throw Erreur.mauvaisparametre}
         
         self.pos = position
         self.nom = nom
@@ -47,13 +47,13 @@ public struct TPiece : Piece{
     public func estPossibleMouvement(partie : TPartie, position : [Int]) -> Bool{
         if var positionPiece = partie.pieceAPosition(pos : position) {
             if (self.pos != nil) && (-1 < position[0]) && (position[0] < 4) && (-1 < position[1]) && (position[1] < 3) && (partie.pieceAPosition(pos : position)!.proprietairePiece() != self.proprietairePiece()){
-                if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
+                if self.nom == "Kitsune1" || self.nom == "Kitsune2"{ //peu importe le joueur les diagonales de la piece seront les mêmes
                     return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1])
                 }
-                else if self.nom == "Tanuki"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
+                else if self.nom == "Tanuki1" || self.nom == "Tanuki2"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
                     return (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
                 }
-                else if self.nom == "Kodama"{
+                else if self.nom == "Kodama1" || self.nom == "Kodama2"{
                     if self.estTransforme(){
                         if self.proprietairePiece() == 1 {
                             if (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
@@ -101,13 +101,13 @@ public struct TPiece : Piece{
         }
         else{
             if (self.pos != nil) && (-1 < position[0]) && (position[0] < 4) && (-1 < position[1]) && (position[1] < 3){
-                if self.nom == "Kitsune"{ //peu importe le joueur les diagonales de la piece seront les mêmes
+                if self.nom == "Kitsune1" || self.nom == "Kitsune2"{ //peu importe le joueur les diagonales de la piece seront les mêmes
                     return (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1]+1 == position[1])
                 }
-                else if self.nom == "Tanuki"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
+                else if self.nom == "Tanuki1" || self.nom == "Tanuki2"{ // pareil peu importe le joueur les cases drtoite/gauche et avant/arriere seront les mêmes
                     return (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1])
                 }
-                else if self.nom == "Kodama"{
+                else if self.nom == "Kodama1" || self.nom == "Kodama2"{
                     if self.estTransforme(){
                         if self.proprietairePiece() == 1 {
                             if (self.pos![0]+1 == position[0] && self.pos![1]+1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0]+1 == position[0] && self.pos![1] == position[1]) || (self.pos![0]-1 == position[0] && self.pos![1] == position[1]) || (self.pos![0] == position[0] && self.pos![1]-1 == position[1]) || (self.pos![0] == position[0] && self.pos![1]+1 == position[1]) {
@@ -186,10 +186,10 @@ public struct TPiece : Piece{
             catch {
             }
             self.pos = nouvellePos
-            if self.nom == "Kodama" && self.proprietairePiece() == 1 && nouvellePos[0] == 3{
+            if (self.nom == "Kodama1" || self.nom == "Kodama2") && self.proprietairePiece() == 1 && nouvellePos[0] == 3{
                 self.trans = true
             }
-            else if self.nom == "Kodama" && self.proprietairePiece() == 2 && nouvellePos[0] == 0{
+            else if (self.nom == "Kodama1" || self.nom == "Kodama2") && self.proprietairePiece() == 2 && nouvellePos[0] == 0{
                 self.trans = true
             }
         }
@@ -207,7 +207,7 @@ public struct TPiece : Piece{
             self.joueur = 1
         }
         self.pos = nil
-        if self.nom == "Kodama"{
+        if self.nom == "Kodama1" || self.nom == "Kodama2"{
             if self.estTransforme() {
                 self.trans = false
             }

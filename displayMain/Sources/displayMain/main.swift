@@ -6,8 +6,10 @@ var p : TPartie = TPartie()// init : Demarrer la partie
 
 while !(p.partieFini()) {
     // affiche l'etat du jeu
+
     print("tour du joueur \(p.joueurActif())")
     var str : String = ""
+
     for i in 0...3 {
         for j in 0...2 {
             if let t = p.pieceAPosition(pos : [i,j]){
@@ -19,6 +21,7 @@ while !(p.partieFini()) {
         print(str)
         str=""
     }
+
     var str2 : String = ""
     for piece in p.tableau{ // utilise iterateur normal sur toutes les pieces
         if piece.estDansReserve(){
@@ -29,6 +32,7 @@ while !(p.partieFini()) {
             }
         }
     }
+            print("OK")
     print("Reserve J1 \n"+str+"\n Reserve J2 \n"+str2)
 
     // Choix de l'action du joueur
@@ -37,6 +41,7 @@ while !(p.partieFini()) {
     var pChoisie : TPiece?
     var posChoisie : [Int]?
     var anciennepos : [Int] = []
+
 
 
     while !repV {
@@ -118,8 +123,7 @@ while !(p.partieFini()) {
                                                             pChoisie = piece
                                                             posChoisie = [posLigne, posCol]
                                                             anciennepos = piece.positionPiece()!
-                                                            print("\(posChoisie)")
-                                                            print("\(anciennepos)")
+
                                                             yorn = true
                                                             repV = true
                                                             while let piece = it.next(){}
@@ -165,7 +169,10 @@ while !(p.partieFini()) {
                     try p = pChoisie.deplacerPiece(partie : &p, nouvellePos : posChoisie)}// on considere la capture comme un deplacement (on peut gagner la partie ici)
                 catch {
                 }*/
-                p.deplacement(Anciennepos : anciennepos, Nouvellepos : posChoisie)
+                do{
+                    try p.deplacement(Anciennepos : anciennepos, Nouvellepos : posChoisie)
+                }
+                catch{}
             }else{// si c'est un parachutage
                 do {
                     try p = pChoisie.parachuter(partie : p, position : posChoisie)}
@@ -190,8 +197,9 @@ while !(p.partieFini()) {
     while let piece=it.next(){
 
         if let pos = piece.positionPiece(){
+        print("\(piece.typePiece())")
 
-            if piece.typePiece() == "Kuropokkuru"{
+            if piece.typePiece() == "Koropokkuru"{
 
                 if pos[0] == p.derniereLigne(joueur : p.joueurActif()){
                     p.gagner(joueur : p.joueurActif())

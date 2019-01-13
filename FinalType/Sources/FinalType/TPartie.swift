@@ -20,27 +20,27 @@ public struct TPartie : Partie, AttPartie {
 
     public init() {
         do{
-            try! self.ko1 = TPiece(position : [1,1], nom : "Kodama")}
+            try! self.ko1 = TPiece(position : [1,1], nom : "Kodama1")}
         catch {
         }
         do {
-            try! self.ko2 = TPiece(position : [2,1], nom : "Kodama")}
+            try! self.ko2 = TPiece(position : [2,1], nom : "Kodama2")}
         catch {
         }
         do {
-            try! self.ki1 = TPiece(position : [0,2], nom : "Kitsune")}
+            try! self.ki1 = TPiece(position : [0,2], nom : "Kitsune1")}
         catch {
         }
         do{
-            try! self.ki2 = TPiece(position : [3,0], nom : "Kitsune")}
+            try! self.ki2 = TPiece(position : [3,0], nom : "Kitsune2")}
         catch {
         }
         do{
-            try! self.ta1 = TPiece(position : [0,0], nom : "Tanuki")}
+            try! self.ta1 = TPiece(position : [0,0], nom : "Tanuki1")}
         catch {
         }
         do{
-            try! self.ta2 = TPiece(position : [3,2], nom : "Tanuki")}
+            try! self.ta2 = TPiece(position : [3,2], nom : "Tanuki2")}
         catch {
         }
         do{
@@ -203,7 +203,7 @@ public struct TPartie : Partie, AttPartie {
         }*/
     }
 
-    public mutating func deplacement(Anciennepos : [Int], Nouvellepos : [Int]){
+    public mutating func deplacement(Anciennepos : [Int], Nouvellepos : [Int]) throws {
         // CAPTURE 
         if self.pieceAPosition(pos : Nouvellepos) != nil{
             if let position = self.ko1.positionPiece(){
@@ -219,7 +219,8 @@ public struct TPartie : Partie, AttPartie {
                     do{
                         try self.ko2.etreCapturee()
                     }
-                    catch{}                }
+                    catch{}   
+                }
              }
             if let position = self.ki1.positionPiece(){
                 if self.ki1.positionPiece()! == Nouvellepos{

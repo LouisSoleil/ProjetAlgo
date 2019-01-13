@@ -21,7 +21,7 @@ public struct TPieceJIT{
             var i : Int = 0
             var piece : TPiece = self.courant!
             while t {
-                if i == 3{
+                if i == self.pieces.count - 1{
                     self.courant = nil
                     t = false
                 }
