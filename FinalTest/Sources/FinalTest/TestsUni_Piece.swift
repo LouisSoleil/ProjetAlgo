@@ -112,21 +112,21 @@ func testEstPossibleMouvement(){
 func testDeplacerPiece() throws{
     var p : TPartie = TPartie()
     var pi1 : TPiece = p.pieceAPosition(pos : [0,1])!
-    if var p2 : TPartie?=try pi1.deplacerPiece(partie : p, nouvellePos : [1,0]){
+    if var p2 : TPartie?=try pi1.deplacerPiece(partie : &p, nouvellePos : [1,0]){
         print("la pièce a été déplacée")
     }
     else{
         print("Problème : la pièce aurait dû être déplacée")
     }
     do{
-        try pi1.deplacerPiece(partie : p, nouvellePos : [1,1])
+        try pi1.deplacerPiece(partie : &p, nouvellePos : [1,1])
         print("Problème : Une pièce aurait dû bloquer le déplacement")
     }
     catch{
         print("position déjà occupée")
     }
     do{
-        try pi1.deplacerPiece(partie : p, nouvellePos : [1,-1])
+        try pi1.deplacerPiece(partie : &p, nouvellePos : [1,-1])
         print("Problème : La case n'existe pas")
     }
     catch{
@@ -135,7 +135,7 @@ func testDeplacerPiece() throws{
     var par : TPartie = TPartie()
     var pie1 : TPiece = par.pieceAPosition(pos : [0,1])!
     do{
-        try pie1.deplacerPiece(partie : par, nouvellePos : [2,0])
+        try pie1.deplacerPiece(partie : &par, nouvellePos : [2,0])
         print("Problème : Le mouvement ne correspond pas à la pièce")
     }
     catch{

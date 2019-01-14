@@ -61,21 +61,21 @@ func testEstPossibleMouvementK(){
 func testDeplacerPieceK(){
     var p : TPartie = TPartie()
     var k1 : TPiece = p.pieceAPosition(pos : [1,1])!
-    if let p2 : TPartie? = try! k1.deplacerPiece(partie : p, nouvellePos : [2,1]){
+    if let p2 : TPartie? = try! k1.deplacerPiece(partie : &p, nouvellePos : [2,1]){
         print("Le kodama a été déplacée")
     }
     else{
         print("Problème : le kodama aurait dû être déplacée")
     }
     do{
-        try k1.deplacerPiece(partie : p, nouvellePos : [1,2])
+        try k1.deplacerPiece(partie : &p, nouvellePos : [1,2])
         print("Problème : La pièce n'aurait pas dû effectuer le déplacement")
     }
     catch{
         print("Le déplacement ne correspond pas au type Kodama")
     }
     do{
-        try k1.deplacerPiece(partie : p, nouvellePos : [1,-1])
+        try k1.deplacerPiece(partie : &p, nouvellePos : [1,-1])
         print("Problème : La case n'existe pas")
     }
     catch{

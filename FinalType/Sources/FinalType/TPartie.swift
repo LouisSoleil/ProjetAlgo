@@ -202,7 +202,19 @@ public struct TPartie : Partie, AttPartie {
             self.Fini = true
         }*/
     }
+    
 
+
+
+
+//----------------------------------------------- FONCTION RAJOUTEE ----------------------------------
+
+    //Description : Déplace une piece, si la piece est un kodama, verifie si le kodama arrive a la derniere ligne de son proprietaire, et le transforme si c'est le cas
+    //              Capture une piece si on se deplace sur une piece de l'adversaire
+    // Pre :        Fonction appelé uniquement si le deplacement est possible
+    //Données : Anciennepos : [Int](2), Nouvellepos : [Int](2)
+    //Préconditions : positionPiece(k)!=Vide
+    //Résultat : La même partie avec la pièce sur une nouvelle position (et eventuellement une piece capturée)
     public mutating func deplacement(Anciennepos : [Int], Nouvellepos : [Int]) throws {
         // CAPTURE 
         if self.pieceAPosition(pos : Nouvellepos) != nil{
@@ -274,11 +286,23 @@ public struct TPartie : Partie, AttPartie {
         if let position = self.ko1.positionPiece(){
             if self.ko1.positionPiece()! == Anciennepos {
                 self.ko1.changerPosition(pos : Nouvellepos)
+                if !self.ko1.estTransforme(){
+                    do{
+                        try self.ko1.transformer()
+                    }
+                    catch{}
+                }
             }
         }
         if let position = self.ko2.positionPiece(){
             if self.ko2.positionPiece()! == Anciennepos {
                 self.ko2.changerPosition(pos : Nouvellepos)
+                if !self.ko2.estTransforme(){
+                    do{
+                        try self.ko2.transformer()
+                    }
+                    catch{}
+                }
             }
          }
         if let position = self.ki1.positionPiece(){
@@ -313,6 +337,12 @@ public struct TPartie : Partie, AttPartie {
         }
     }
 
+
+    // Description : Place une pièce de la réserve sur le plateau
+    // Données :  nom : String, Nouvellepos : [Int](2), position où l'on souhaite placer la pièce, nom de la piece qui sera parachutée
+    // Préconditions : positionPiece(p)=Vide, (x,y) est une place inoccupée sur la partie
+    // Résultat : La même pièce qui a désormais une position sur le plateau
+    // Post-conditions : positionPiece(p)!=Vide
     public mutating func parachutage(nom : String, Nouvellepos : [Int]){
         if let position = self.ko1.positionPiece(){}else{
             if self.ko1.typePiece() == nom {
